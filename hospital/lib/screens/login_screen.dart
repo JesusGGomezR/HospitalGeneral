@@ -5,34 +5,53 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+  LoginScreen({super.key});
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   //TODO------------------------------------------------------------------------
 
-   Future<void> loginUser(String username, String password, BuildContext context) async {
-     if (usernameController != null && passwordController != null) {
-       final response = await http.post(
-         Uri.parse('http://localhost/hospital/login.php'),
-         body: {'username': usernameController.text, 'password': passwordController.text},
-       );
+  Future<void> loginUser(
+      String username, String password, BuildContext context) async {
+    if (usernameController != null && passwordController != null) {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.82/login.php'),
+        body: {
+          'username': usernameController.text,
+          'password': passwordController.text
+        },
+      );
 
-    if (response.statusCode == 200) {
-      final result = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body);
 
-      if (result['status'] == 'success') {
-        // Usuario autenticado, puedes redirigir al usuario a la pantalla principal o realizar otras acciones
+        if (result['status'] == 'success') {
+          // Usuario autenticado, puedes redirigir al usuario a la pantalla principal o realizar otras acciones
 
-        Navigator.pushReplacementNamed(context, 'home');
+          Navigator.pushReplacementNamed(context, 'home');
+        } else {
+          // Autenticación fallida, muestra un mensaje de error
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Error de autenticación'),
+              content: Text('Verifica tus credenciales e intenta nuevamente.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
       } else {
-
-        // Autenticación fallida, muestra un mensaje de error
+        // Error en la solicitud HTTP
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Error de autenticación'),
-            content: Text('Verifica tus credenciales e intenta nuevamente.'),
+            title: Text('Error'),
+            content: Text('Ocurrió un error. Por favor, intenta nuevamente.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -43,25 +62,8 @@ class LoginScreen extends StatelessWidget {
         );
       }
     } else {
-
-      // Error en la solicitud HTTP
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Ocurrió un error. Por favor, intenta nuevamente.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+      print('Error: Los controladores no están inicializados.');
     }
-     } else {
-       print('Error: Los controladores no están inicializados.');
-     }
   }
 
   //TODO-------------------------------------------------------------------------
@@ -129,13 +131,14 @@ class LoginScreen extends StatelessWidget {
                               icono: const Icon(Icons.lock_rounded)),
                         ),
                         const SizedBox(height: 30),
-
                         MaterialButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                           disabledColor: Colors.grey,
                           color: Colors.deepPurple,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 80, vertical: 15),
                             child: const Text(
                               'Ingresar',
                               style: TextStyle(color: Colors.white),
@@ -143,7 +146,8 @@ class LoginScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             // Llama a la función loginUser al hacer clic en el botón Ingresar
-                            loginUser(usernameController.text, passwordController.text, context);
+                            loginUser(usernameController.text,
+                                passwordController.text, context);
                           },
                         )
                       ],
@@ -186,7 +190,7 @@ class LoginScreen extends StatelessWidget {
         ]),
       ),
       width: double.infinity,
-      height: size.height * 0.4,                //Porcentaje del area
+      height: size.height * 0.4, //Porcentaje del area
       child: Stack(
         children: [
           Positioned(child: circulos(), top: 90, left: 30),
