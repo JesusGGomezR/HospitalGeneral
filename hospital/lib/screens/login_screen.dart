@@ -13,6 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   Future<void> loginUser(
       String username, String password, BuildContext context) async {
+    // ignore: unnecessary_null_comparison
     if (usernameController != null && passwordController != null) {
       final response = await http.post(
         Uri.parse('http://192.168.1.82/login.php'),
@@ -118,17 +119,21 @@ class LoginScreen extends StatelessWidget {
                         TextFormField(
                           autocorrect: false,
                           decoration: InputDecorations.inputDecoration(
-                              hintext: 'GORJ090101HTGTMNSA2',
-                              labeltext: 'Usuario',
-                              icono: const Icon(Icons.person_2_rounded)),
+                            hintext: 'GORJ090101HTGTMNSA2',
+                            labeltext: 'Usuario',
+                            icono: const Icon(Icons.person_2_rounded),
+                          ),
+                          controller: usernameController,
                         ),
                         const SizedBox(height: 30),
                         TextFormField(
                           autocorrect: false,
                           decoration: InputDecorations.inputDecoration(
-                              hintext: '***********',
-                              labeltext: 'Contraseña',
-                              icono: const Icon(Icons.lock_rounded)),
+                            hintext: '***********',
+                            labeltext: 'Contraseña',
+                            icono: const Icon(Icons.lock_rounded),
+                          ),
+                          controller: passwordController,
                         ),
                         const SizedBox(height: 30),
                         MaterialButton(
