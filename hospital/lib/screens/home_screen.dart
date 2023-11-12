@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/widgets/input_decoration.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
   final List<MenuOption> menuOptions = [
     MenuOption("Pacientes", Icons.supervised_user_circle),
-    MenuOption("Opción 2", Icons.star),
-    MenuOption("Opción 3", Icons.settings),
-    MenuOption("Opción 4", Icons.camera),
-    MenuOption("Opción 5", Icons.mail),
-    MenuOption("Opción 6", Icons.person),
+    MenuOption("Usuarios", Icons.person),
+    MenuOption("Manual", Icons.menu_book),
+    MenuOption("Ajustes", Icons.settings),
+    MenuOption("Salir", Icons.output),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;             //tamano de la pantalla
     return Scaffold(
       appBar: AppBar(
         title: Text('Administrador'),
       ),
-
       body: Padding(
-        padding: const EdgeInsets.all(20.0),      //Espacio entre las opciones el borde
+        padding: const EdgeInsets.all(20.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,                    //Columnas que tiene el menu
-            crossAxisSpacing: 25.0,               //Espacio entre botones
-            mainAxisSpacing: 20.0,                //Espacio entre botones
+            crossAxisCount: 2,
+            crossAxisSpacing: 25.0,
+            mainAxisSpacing: 20.0,
           ),
-
           itemCount: menuOptions.length,
           itemBuilder: (context, index) {
             return GestureDetector(
@@ -37,12 +36,23 @@ class HomeScreen extends StatelessWidget {
               },
               child: Card(
                 elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),          // Ajusta el radio de las esquinas aquí
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(menuOptions[index].icon),
+                    Icon(
+                      menuOptions[index].icon,
+                      size: 50.0,
+                    ),
                     SizedBox(height: 5.0),
-                    Text(menuOptions[index].name),
+                    Text(
+                      menuOptions[index].name,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -60,3 +70,4 @@ class MenuOption {
 
   MenuOption(this.name, this.icon);
 }
+

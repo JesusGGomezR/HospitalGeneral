@@ -6,7 +6,7 @@ import 'dart:async';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController curpController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   //TODO------------------------------------------------------------------------
@@ -14,11 +14,11 @@ class LoginScreen extends StatelessWidget {
   Future<void> loginUser(
       String username, String password, BuildContext context) async {
     // ignore: unnecessary_null_comparison
-    if (usernameController != null && passwordController != null) {
+    if (curpController != null && passwordController != null) {
       final response = await http.post(
         Uri.parse('http://192.168.1.82/login.php'),
         body: {
-          'username': usernameController.text,
+          'curp': curpController.text,
           'password': passwordController.text
         },
       );
@@ -71,8 +71,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //tamano de la pantalla
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;           //tamano de la pantalla
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -111,11 +110,14 @@ class LoginScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Text('Inicio', style: Theme.of(context).textTheme.headline4),
+
                 const SizedBox(height: 30),
+
                 Container(
                   child: Form(
                     child: Column(
                       children: [
+
                         TextFormField(
                           autocorrect: false,
                           decoration: InputDecorations.inputDecoration(
@@ -123,9 +125,11 @@ class LoginScreen extends StatelessWidget {
                             labeltext: 'Usuario',
                             icono: const Icon(Icons.person_2_rounded),
                           ),
-                          controller: usernameController,
+                          controller: curpController,
                         ),
-                        const SizedBox(height: 30),
+
+                        const SizedBox(height: 30),                     //Espacio entre los campos del login
+
                         TextFormField(
                           autocorrect: false,
                           decoration: InputDecorations.inputDecoration(
@@ -136,7 +140,8 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordController,
                         ),
                         const SizedBox(height: 30),
-                        MaterialButton(
+
+                        MaterialButton(                                  //Boton login
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           disabledColor: Colors.grey,
@@ -151,10 +156,11 @@ class LoginScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             // Llama a la función loginUser al hacer clic en el botón Ingresar
-                            loginUser(usernameController.text,
+                            loginUser(curpController.text,
                                 passwordController.text, context);
                           },
                         )
+
                       ],
                     ),
                   ),
@@ -164,7 +170,7 @@ class LoginScreen extends StatelessWidget {
           ),
           const SizedBox(height: 50),
           const Text(
-            'Crear una cuenta nueva',
+            '', //Crear una cuenta nueva
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ],

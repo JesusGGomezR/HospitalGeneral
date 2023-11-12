@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class InputDecorations {
   static InputDecoration inputDecoration(
       {required String hintext,
