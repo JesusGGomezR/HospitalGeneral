@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospital/widgets/input_decoration.dart';
+
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                // Acción al hacer clic en una opción del menú
+                Navigator.pushReplacementNamed(context, 'user');
                 print('Clic en ${menuOptions[index].name}');
               },
               child: Card(
