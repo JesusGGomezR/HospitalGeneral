@@ -1,29 +1,31 @@
 class User {
-  final int? id;
-  final String? nombre;
-  final String? curp;
-  final String? correo;
-  final String? contrasena;
+  final id;
+  final nombre;
+  final curp;
+  final correo;
+  final contrasena;
 
   User({
-    this.id,
-    this.nombre,
-    this.curp,
-    this.correo,
-    this.contrasena,
+    required this.id,
+    required this.nombre,
+    required this.curp,
+    required this.correo,
+    required this.contrasena,
   });
-
-  // Métodos adicionales del modelo, si los hay
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
-      nombre: json['nombre_completo'],    //Estos deben de ser iguales a los campos en la base de datos
+      nombre: json['nombre_completo'],
       curp: json['curp'],
       correo: json['correo'],
       contrasena: json['password'],
     );
   }
 }
+
+
+
+
 
 

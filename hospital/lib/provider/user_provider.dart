@@ -9,58 +9,68 @@ class UserProvider extends ChangeNotifier {
 
   User? get currentUser => _currentUser;
 
-  // URL de tu backend que maneja la obtención y actualización de datos del usuario
   static const String apiUrl = 'http://192.168.1.82/update_user.php';
 
   Future<void> loadUserData() async {
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(Uri.parse('http://192.168.1.82/load_user.php'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> userData = json.decode(response.body);
         _currentUser = User(
           id: userData['id'],
-          nombre: userData['nombre'],
+          nombre: userData['nombre_completo'],
           curp: userData['curp'],
           correo: userData['correo'],
-          contrasena: userData['contrasena'],
+          contrasena: userData['password'],
         );
 
         notifyListeners();
       } else {
-        // Manejar errores de la solicitud HTTP según tus necesidades
         print('Error en la solicitud HTTP: ${response.statusCode}');
       }
     } catch (error) {
-      // Manejar errores de conexión u otros errores
       print('Error: $error');
     }
   }
 
-  Future<void> updateUserData(User updatedUser) async {
+  Future<Map<String, dynamic>> updateUserData(User updatedUser) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.82/update_user.php/${updatedUser.id}'),
+        Uri.parse('http://192.168.1.82/update_user.php'),  // Actualiza la URL al nuevo nombre del script
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'nombre': updatedUser.nombre,
+          'id': updatedUser.id,
+          'nombre_completo': updatedUser.nombre,
           'curp': updatedUser.curp,
           'correo': updatedUser.correo,
-          'contrasena': updatedUser.contrasena,
+          'password': updatedUser.contrasena,
         }),
       );
 
-      print('Response status code: ${response.statusCode}');
+      // Decodifica la respuesta del servidor
+      final Map<String, dynamic> responseData = json.decode(response.body);
 
-      // Resto del código...
+      // Verifica si la respuesta es un mapa (JSON válido)
+      if (responseData is Map<String, dynamic>) {
+        print('Response from server: $responseData');
+
+        // Devuelve la respuesta del servidor
+        return responseData;
+      } else {
+        // Si la respuesta no es un mapa, lanza una excepción
+        throw Exception('Respuesta del servidor no es un JSON válido');
+      }
     } catch (error) {
       print('Error: $error');
+      // En caso de error, puedes lanzar una excepción o devolver un mapa indicando el error
+      throw Exception('Error updating user data');
     }
   }
 
   Future<List<User>> getUsers() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.82/get_users.php')); // Ajusta según tu API
+      final response = await http.get(Uri.parse('http://192.168.1.82/get_users.php'));
 
       if (response.statusCode == 200) {
         final List<dynamic> userDataList = json.decode(response.body);
@@ -86,7 +96,6 @@ class UserProvider extends ChangeNotifier {
       return [];
     }
   }
-
 }
 
 

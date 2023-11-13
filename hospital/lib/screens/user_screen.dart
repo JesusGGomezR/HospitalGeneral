@@ -29,6 +29,17 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Usuario'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            try {
+            // Navegar de regreso cuando se presiona el botón de retroceso
+              Navigator.pushReplacementNamed(context, 'home');
+            } catch (e) {
+              print('Error al regresar: $e');
+            }
+          },
+        ),
       ),
       body: FutureBuilder<List<User>>(
         future: userProvider.getUsers(),
@@ -68,7 +79,6 @@ class _EditUserScreenState extends State<EditUserScreen> {
       ),
     );
   }
-
 }
 
 

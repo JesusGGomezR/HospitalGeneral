@@ -22,10 +22,10 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   void initState() {
     super.initState();
     // Inicializa los controladores con los datos actuales del usuario
-    _nombreController = TextEditingController(text: widget.user.nombre ?? '');
-    _curpController = TextEditingController(text: widget.user.curp ?? '');
-    _correoController = TextEditingController(text: widget.user.correo ?? '');
-    _contrasenaController = TextEditingController(text: widget.user.contrasena ?? '');
+    _nombreController = TextEditingController(text: widget.user.nombre);
+    _curpController = TextEditingController(text: widget.user.curp);
+    _correoController = TextEditingController(text: widget.user.correo);
+    _contrasenaController = TextEditingController(text: widget.user.contrasena);
   }
 
   @override
@@ -85,7 +85,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
     );
   }
 
-  void _updateUserDetails(BuildContext context) {
+  void _updateUserDetails(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     // Crea un nuevo usuario con los detalles actualizados
@@ -97,10 +97,19 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
       contrasena: _contrasenaController.text,
     );
 
-    // Llama a la función en el UserProvider para actualizar los detalles del usuario
-    userProvider.updateUserData(updatedUser);
+    try {
+      final Map<String, dynamic> response = await userProvider.updateUserData(
+          updatedUser);
+      print('Response from server: $response');
 
-    // Navega de regreso a la pantalla anterior
-    Navigator.pop(context);
+      // Recargar la lista después de la actualización
+      await userProvider.loadUserData();
+
+      // Navegar de regreso a la pantalla anterior
+      Navigator.pop(context);
+    } catch (error) {
+      // Manejo de errores
+      print('Error: $error');
+    }
   }
 }
