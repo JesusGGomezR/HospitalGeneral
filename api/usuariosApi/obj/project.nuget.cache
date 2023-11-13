@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dc7vOoODeHhfT5k7qcFhPEzDYAt0EuJHlbecftBTKL1Fa91k640bAnao+nnBi3x9DYcB4gZTgYRCKlOOYGNWfA==",
+  "dgSpecHash": "D4YKU40pfu8Iz2fXYo/2QweslzqhA964p+C+SSSeFQwrUp8DHZvwBkGVhPV/EkaUjBW6zM+wCdct6Oohbs5iaQ==",
   "success": true,
-  "projectFilePath": "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\usuariosApi.csproj",
+  "projectFilePath": "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\usuariosApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jssbr\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\jssbr\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
