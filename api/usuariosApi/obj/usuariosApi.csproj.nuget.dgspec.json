@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\usuariosApi.csproj": {}
+    "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\usuariosApi.csproj": {}
   },
   "projects": {
-    "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\usuariosApi.csproj": {
+    "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\usuariosApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\usuariosApi.csproj",
+        "projectUniqueName": "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\usuariosApi.csproj",
         "projectName": "usuariosApi",
-        "projectPath": "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\usuariosApi.csproj",
+        "projectPath": "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\usuariosApi.csproj",
         "packagesPath": "C:\\Users\\jssbr\\.nuget\\packages\\",
-        "outputPath": "D:\\ITESI Noveno\\Tesis 2\\Este\\api\\usuariosApi\\obj\\",
+        "outputPath": "C:\\Users\\jssbr\\OneDrive\\Escritorio\\Repositorio\\HospitalGeneral\\api\\usuariosApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jssbr\\AppData\\Roaming\\NuGet\\NuGet.Config"
