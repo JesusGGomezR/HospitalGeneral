@@ -98,8 +98,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
     );
 
     try {
-      final Map<String, dynamic> response = await userProvider.updateUserData(
-          updatedUser);
+      final Map<String, dynamic> response = await userProvider.updateUserData(updatedUser);
       print('Response from server: $response');
 
       // Recargar la lista después de la actualización

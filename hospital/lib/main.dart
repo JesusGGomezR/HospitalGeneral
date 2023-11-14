@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/provider/user_provider.dart';
+import 'package:hospital/provider/patient_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/screens/home_screen.dart';
 import 'package:hospital/screens/login_screen.dart';
 import 'package:hospital/screens/user_screen.dart';
+import 'package:hospital/screens/patients_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => PatientProvider()),
         // Otros providers pueden ir aquí
       ],
       child: MaterialApp(
@@ -24,6 +27,7 @@ class MyApp extends StatelessWidget {
           'login': (_) => LoginScreen(),
           'home': (_) => HomeScreen(),
           'user': (_) => EditUserScreen(),
+          'patients': (_) => EditPatientScreen(),
         },
         initialRoute: 'login',
       ),

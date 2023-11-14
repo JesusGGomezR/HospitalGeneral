@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/user_model.dart';
+import 'package:hospital/models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
   User? _currentUser;

@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     MenuOption("Pacientes", Icons.supervised_user_circle, (BuildContext context) {
       // Lógica para la opción "Pacientes"
       print('Clic en Pacientes');
-      Navigator.pushReplacementNamed(context, 'pacientes');  // Reemplaza 'pacientes' con la ruta adecuada
+      Navigator.pushReplacementNamed(context, 'patients');  // Reemplaza 'pacientes' con la ruta adecuada
     }),
     MenuOption("Usuarios", Icons.person, (BuildContext context) {
       // Lógica para la opción "Usuarios"
