@@ -32,7 +32,8 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
     // Inicializa los controladores con los datos actuales del paciente
     _curpController = TextEditingController(text: widget.patient.curp);
     _nombreController = TextEditingController(text: widget.patient.nombre);
-    _apellidosController = TextEditingController(text: widget.patient.apellidos);
+    _apellidosController =
+        TextEditingController(text: widget.patient.apellidos);
     _telefonoController = TextEditingController(text: widget.patient.telefono);
     _domicilioController =
         TextEditingController(text: widget.patient.domicilio);
@@ -52,6 +53,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: Text('Editar Detalles del Paciente'),
       ),
       body: SingleChildScrollView(
@@ -166,7 +168,8 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   }
 
   void _updatePatientDetails(BuildContext context) async {
-    final patientProvider = Provider.of<PatientProvider>(context, listen: false);
+    final patientProvider =
+        Provider.of<PatientProvider>(context, listen: false);
 
     // Crea un nuevo paciente con los detalles actualizados
     Patient updatedPatient = Patient(
@@ -185,7 +188,8 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
     );
 
     try {
-      final Map<String, dynamic> response = await patientProvider.updatePatientData(updatedPatient);
+      final Map<String, dynamic> response =
+          await patientProvider.updatePatientData(updatedPatient);
       print('Response from server: $response');
 
       // Recargar la lista después de la actualización
@@ -199,8 +203,3 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
     }
   }
 }
-
-
-
-
-

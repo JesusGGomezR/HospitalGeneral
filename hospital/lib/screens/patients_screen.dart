@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:hospital/models/expedient_model.dart';
+import 'package:hospital/provider/expedient_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/provider/patient_provider.dart'; // Asegúrate de importar el provider correcto
 import '../models/patient_model.dart'; // Asegúrate de importar el modelo correcto
@@ -14,20 +18,33 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
   TextEditingController searchController = TextEditingController();
   List<Patient> allPatients = [];
   List<Patient> filteredPatients = [];
+  List<Expedient> allExpedients = [];
+  List<Expedient> filteredExpedients = [];
 
   @override
   void initState() {
     super.initState();
     // Cargar la lista completa de pacientes al iniciar la pantalla
     loadPatients();
+    loadExpedients();
     // Agregar un listener para el evento onChanged del TextField
     searchController.addListener(() {
       filterPatients(searchController.text);
     });
   }
 
+  void loadExpedients() async {
+    final expedientProvider =
+        Provider.of<ExpedientProvider>(context, listen: false);
+    allExpedients = await expedientProvider.getExpedients();
+    setState(() {
+      filteredExpedients = allExpedients;
+    });
+  }
+
   void loadPatients() async {
-    final patientProvider = Provider.of<PatientProvider>(context, listen: false);
+    final patientProvider =
+        Provider.of<PatientProvider>(context, listen: false);
     allPatients = await patientProvider.getPatients();
     setState(() {
       filteredPatients = allPatients;
@@ -37,10 +54,18 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
   void filterPatients(String query) {
     final List<Patient> filteredList = allPatients
         .where((patient) =>
-        patient.curp.toLowerCase().contains(query.toLowerCase()))
+            patient.curp.toLowerCase().contains(query.toLowerCase()))
         .toList();
     setState(() {
       filteredPatients = filteredList;
+    });
+  }
+
+  void filterExpedients(String query) {
+    final List<Expedient> filteredList =
+        allExpedients.where((expedient) => expedient.id_expediente).toList();
+    setState(() {
+      filteredExpedients = filteredList;
     });
   }
 
@@ -48,6 +73,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: Text('Editar Paciente'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -75,25 +101,51 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: filteredPatients.length,
+              itemCount:
+                  min(filteredPatients.length, filteredExpedients.length),
               itemBuilder: (context, index) {
                 Patient patient = filteredPatients[index];
+                Expedient expedient = filteredExpedients[index];
 
-                return ListTile(
-                  title: Text('${patient.nombre} ${patient.apellidos}'),
-                  subtitle: Text(patient.curp ?? ''),
-                  trailing: ElevatedButton(
-                    onPressed: () {
-                      // Navegar a la pantalla de edición con el paciente seleccionado
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EditPatientDetailsScreen(patient: patient),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // Aquí puedes colocar el widget adicional en la columna izquierda
+                      // Por ejemplo, un ícono, un círculo, etc.
+                      Icon(Icons
+                          .person), // Esto es solo un ejemplo, puedes personalizarlo según tus necesidades
+
+                      // Espaciador para separar el widget adicional de la lista
+                      SizedBox(width: 8),
+                      Text(expedient.clave_expediente ?? ''),
+                      SizedBox(width: 8),
+
+                      // Listado de pacientes
+                      Expanded(
+                        child: ListTile(
+                          title: Text('${patient.nombre} ${patient.apellidos}'),
+                          subtitle: Text(patient.curp ?? ''),
+                          trailing: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Colors.deepPurple)),
+                            onPressed: () {
+                              // Navegar a la pantalla de edición con el paciente seleccionado
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditPatientDetailsScreen(
+                                          patient: patient),
+                                ),
+                              );
+                            },
+                            child: Text('Editar'),
+                          ),
                         ),
-                      );
-                    },
-                    child: Text('Editar'),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -101,6 +153,8 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
           ),
           SizedBox(height: 16.0), // Ajusta el espacio según tus necesidades
           ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
             onPressed: () {
               // Navegar a la pantalla para agregar un nuevo paciente
               Navigator.push(
@@ -117,4 +171,3 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
     );
   }
 }
-

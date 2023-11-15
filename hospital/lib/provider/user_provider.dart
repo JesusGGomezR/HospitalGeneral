@@ -12,12 +12,14 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> loadUserData() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.82/load_user.php'));
+      final response =
+          await http.get(Uri.parse('http://192.168.1.82/load_user.php'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> userData = json.decode(response.body);
         _currentUser = User(
           id: userData['id'],
+          id_rol: userData['id_rol'],
           nombre: userData['nombre_completo'],
           curp: userData['curp'],
           correo: userData['correo'],
@@ -36,10 +38,12 @@ class UserProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updateUserData(User updatedUser) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.82/update_user.php'),  // Actualiza la URL al nuevo nombre del script
+        Uri.parse(
+            'http://192.168.1.82/update_user.php'), // Actualiza la URL al nuevo nombre del script
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id': updatedUser.id,
+          'id_rol': updatedUser.id_rol,
           'nombre_completo': updatedUser.nombre,
           'curp': updatedUser.curp,
           'correo': updatedUser.correo,
@@ -69,7 +73,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<List<User>> getUsers() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.82/get_users.php'));
+      final response =
+          await http.get(Uri.parse('http://192.168.1.82/get_users.php'));
 
       if (response.statusCode == 200) {
         final List<dynamic> userDataList = json.decode(response.body);
@@ -96,6 +101,3 @@ class UserProvider extends ChangeNotifier {
     }
   }
 }
-
-
-

@@ -1,5 +1,6 @@
 class User {
   final id;
+  final id_rol;
   final nombre;
   final curp;
   final correo;
@@ -7,6 +8,7 @@ class User {
 
   User({
     required this.id,
+    required this.id_rol,
     required this.nombre,
     required this.curp,
     required this.correo,
@@ -16,6 +18,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
+      id_rol: json['id_rol'],
       nombre: json['nombre_completo'],
       curp: json['curp'],
       correo: json['correo'],
@@ -23,11 +26,3 @@ class User {
     );
   }
 }
-
-
-
-
-
-
-
-

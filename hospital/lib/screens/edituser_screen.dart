@@ -13,6 +13,7 @@ class EditUserDetailsScreen extends StatefulWidget {
 }
 
 class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
+  late TextEditingController _rolController;
   late TextEditingController _nombreController;
   late TextEditingController _curpController;
   late TextEditingController _correoController;
@@ -22,6 +23,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   void initState() {
     super.initState();
     // Inicializa los controladores con los datos actuales del usuario
+    _rolController = TextEditingController(text: widget.user.id_rol);
     _nombreController = TextEditingController(text: widget.user.nombre);
     _curpController = TextEditingController(text: widget.user.curp);
     _correoController = TextEditingController(text: widget.user.correo);
@@ -32,56 +34,72 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: Text('Editar Detalles del Usuario'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Nombre'),
-            TextField(
-              controller: _nombreController,
-              decoration: InputDecoration(
-                hintText: 'Ingrese el nombre',
+      body: formEditUser(context),
+    );
+  }
+
+  Padding formEditUser(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTextField('Nivel (rol)', _rolController, 'Ingresa el rol'),
+          SizedBox(height: 16.0),
+          _buildTextField('Nombre', _nombreController, 'Ingrese el nombre'),
+          SizedBox(height: 16.0),
+          _buildTextField('CURP', _curpController, 'Ingrese el CURP'),
+          SizedBox(height: 16.0),
+          _buildTextField('Correo', _correoController, 'Ingrese el correo'),
+          SizedBox(height: 16.0),
+          _buildTextField(
+            'Contraseña',
+            _contrasenaController,
+            'Ingrese la contraseña',
+            obscureText: true,
+          ),
+          SizedBox(height: 32.0),
+          Center(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text('CURP'),
-            TextField(
-              controller: _curpController,
-              decoration: InputDecoration(
-                hintText: 'Ingrese el CURP',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text('Correo'),
-            TextField(
-              controller: _correoController,
-              decoration: InputDecoration(
-                hintText: 'Ingrese el correo',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text('Contraseña'),
-            TextField(
-              controller: _contrasenaController,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Ingrese la contraseña',
-              ),
-            ),
-            SizedBox(height: 32.0),
-            ElevatedButton(
               onPressed: () {
                 // Actualizar los detalles del usuario utilizando el UserProvider
                 _updateUserDetails(context);
               },
               child: Text('Guardar Cambios'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildTextField(
+    String label,
+    TextEditingController controller,
+    String hintText, {
+    bool obscureText = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            hintText: hintText,
+          ),
+        ),
+      ],
     );
   }
 
@@ -91,6 +109,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
     // Crea un nuevo usuario con los detalles actualizados
     User updatedUser = User(
       id: widget.user.id,
+      id_rol: widget.user.id_rol,
       nombre: _nombreController.text,
       curp: _curpController.text,
       correo: _correoController.text,
@@ -98,7 +117,8 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
     );
 
     try {
-      final Map<String, dynamic> response = await userProvider.updateUserData(updatedUser);
+      final Map<String, dynamic> response =
+          await userProvider.updateUserData(updatedUser);
       print('Response from server: $response');
 
       // Recargar la lista después de la actualización

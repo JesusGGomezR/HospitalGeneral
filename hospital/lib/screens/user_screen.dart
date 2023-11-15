@@ -29,11 +29,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Usuario'),
+        backgroundColor: Colors.deepPurple,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             try {
-            // Navegar de regreso cuando se presiona el botón de retroceso
+              // Navegar de regreso cuando se presiona el botón de retroceso
               Navigator.pushReplacementNamed(context, 'home');
             } catch (e) {
               print('Error al regresar: $e');
@@ -56,22 +57,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               itemBuilder: (context, index) {
                 User user = snapshot.data![index];
 
-                return ListTile(
-                  title: Text(user.nombre ?? ''),
-                  subtitle: Text(user.correo ?? ''),
-                  trailing: ElevatedButton(
-                    onPressed: () {
-                      // Navegar a la pantalla de edición con el usuario seleccionado
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditUserDetailsScreen(user: user),
-                        ),
-                      );
-                    },
-                    child: Text('Editar'),
-                  ),
-                );
+                return listaUsers(user, context);
               },
             );
           }
@@ -79,7 +65,46 @@ class _EditUserScreenState extends State<EditUserScreen> {
       ),
     );
   }
+
+  ListTile listaUsers(User user, BuildContext context) {
+    return ListTile(
+      title: Text(
+        user.nombre ?? '',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+      subtitle: Text(
+        user.correo ?? '',
+        style: TextStyle(
+          fontStyle: FontStyle.italic,
+          fontSize: 14,
+        ),
+      ),
+      trailing: SizedBox(
+        width: 80,
+        child: ElevatedButton(
+          onPressed: () {
+            // Navegar a la pantalla de edición con el usuario seleccionado
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditUserDetailsScreen(user: user),
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.deepPurple, // Color de fondo del botón
+          ),
+          child: Text(
+            'Editar',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
-
-
-

@@ -8,11 +8,13 @@ class PatientProvider extends ChangeNotifier {
 
   Patient? get currentPatient => _currentPatient;
 
-  static const String apiUrl = 'http://192.168.1.82/update_patient.php'; // Asegúrate de actualizar la URL
+  static const String apiUrl =
+      'http://192.168.1.82/update_patient.php'; // Asegúrate de actualizar la URL
 
   Future<void> loadPatientData() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.82/load_patient.php')); // Asegúrate de actualizar la URL
+      final response = await http.get(Uri.parse(
+          'http://192.168.1.82/load_patient.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> patientData = json.decode(response.body);
@@ -78,10 +80,10 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-
   Future<List<Patient>> getPatients() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.82/get_patients.php')); // Asegúrate de actualizar la URL
+      final response = await http.get(Uri.parse(
+          'http://192.168.1.82/get_patients.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final List<dynamic> patientDataList = json.decode(response.body);
@@ -139,7 +141,10 @@ class PatientProvider extends ChangeNotifier {
         return responseData;
       } else {
         // Si la respuesta no es un mapa, devuelve un mapa con un indicador de error
-        return {'status': 'error', 'error': 'Respuesta del servidor no es un JSON válido'};
+        return {
+          'status': 'error',
+          'error': 'Respuesta del servidor no es un JSON válido'
+        };
       }
     } catch (error) {
       print('Error: $error');
@@ -147,7 +152,4 @@ class PatientProvider extends ChangeNotifier {
       return {'status': 'error', 'error': 'Error updating patient data'};
     }
   }
-
 }
-
-

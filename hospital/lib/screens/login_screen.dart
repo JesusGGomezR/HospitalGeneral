@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;           //tamano de la pantalla
+    final size = MediaQuery.of(context).size; //tamano de la pantalla
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -110,14 +110,11 @@ class LoginScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Text('Inicio', style: Theme.of(context).textTheme.headline4),
-
                 const SizedBox(height: 30),
-
                 Container(
                   child: Form(
                     child: Column(
                       children: [
-
                         TextFormField(
                           autocorrect: false,
                           decoration: InputDecorations.inputDecoration(
@@ -128,7 +125,8 @@ class LoginScreen extends StatelessWidget {
                           controller: curpController,
                         ),
 
-                        const SizedBox(height: 30),                     //Espacio entre los campos del login
+                        const SizedBox(
+                            height: 30), //Espacio entre los campos del login
 
                         TextFormField(
                           autocorrect: false,
@@ -141,7 +139,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 30),
 
-                        MaterialButton(                                  //Boton login
+                        MaterialButton(
+                          //Boton login
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           disabledColor: Colors.grey,
@@ -160,7 +159,6 @@ class LoginScreen extends StatelessWidget {
                                 passwordController.text, context);
                           },
                         )
-
                       ],
                     ),
                   ),
