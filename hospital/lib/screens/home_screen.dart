@@ -1,20 +1,21 @@
-
 import 'package:flutter/material.dart';
-
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final List<MenuOption> menuOptions = [
-    MenuOption("Pacientes", Icons.supervised_user_circle, (BuildContext context) {
+    MenuOption("Pacientes", Icons.supervised_user_circle,
+        (BuildContext context) {
       // Lógica para la opción "Pacientes"
       print('Clic en Pacientes');
-      Navigator.pushReplacementNamed(context, 'patients');  // Reemplaza 'pacientes' con la ruta adecuada
+      Navigator.pushReplacementNamed(
+          context, 'patients'); // Reemplaza 'pacientes' con la ruta adecuada
     }),
     MenuOption("Usuarios", Icons.person, (BuildContext context) {
       // Lógica para la opción "Usuarios"
       print('Clic en Usuarios');
-      Navigator.pushReplacementNamed(context as BuildContext, 'user');  // Reemplaza 'user' con la ruta adecuada
+      Navigator.pushReplacementNamed(context as BuildContext,
+          'user'); // Reemplaza 'user' con la ruta adecuada
     }),
     MenuOption("Manual", Icons.menu_book, (BuildContext context) {
       // Lógica para la opción "Manual"
@@ -35,9 +36,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; // Tamaño de la pantalla
+    //final size = MediaQuery.of(context).size; // Tamaño de la pantalla
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Administrador'),
       ),
       body: Padding(
@@ -89,5 +91,3 @@ class MenuOption {
 
   MenuOption(this.name, this.icon, this.onTap);
 }
-
-

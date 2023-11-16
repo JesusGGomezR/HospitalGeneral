@@ -38,7 +38,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Editar Detalles del Usuario'),
       ),
       body: SingleChildScrollView(
@@ -129,8 +129,8 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
           Center(
             child: ElevatedButton(
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
-              ),
+                  backgroundColor: MaterialStatePropertyAll(
+                      Color.fromARGB(255, 21, 74, 102))),
               onPressed: () {
                 if (_formKey.currentState != null &&
                     _formKey.currentState!.validate()) {
@@ -158,7 +158,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
       padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14.0),
-        color: Colors.grey[100],
+        color: Color.fromARGB(255, 209, 209, 211),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

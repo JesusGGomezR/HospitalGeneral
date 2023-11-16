@@ -147,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           disabledColor: Colors.grey,
-                          color: Colors.deepPurple,
+                          color: Color.fromARGB(255, 27, 89, 121),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 80, vertical: 15),
@@ -197,7 +197,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          Color.fromRGBO(63, 63, 156, 1),
+          Color.fromARGB(255, 27, 89, 121),
           Color.fromRGBO(90, 70, 178, 1),
         ]),
       ),

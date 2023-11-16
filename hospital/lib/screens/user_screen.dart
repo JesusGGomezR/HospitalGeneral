@@ -29,7 +29,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Usuario'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -95,7 +95,8 @@ class _EditUserScreenState extends State<EditUserScreen> {
             );
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.deepPurple, // Color de fondo del botón
+            primary:
+                Color.fromARGB(255, 27, 89, 121), // Color de fondo del botón
           ),
           child: Text(
             'Editar',

@@ -53,7 +53,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Editar Detalles del Paciente'),
       ),
       body: SingleChildScrollView(
@@ -157,6 +157,9 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
       ),
       persistentFooterButtons: [
         ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121))),
           onPressed: () {
             // Actualizar los detalles del paciente utilizando el PatientProvider
             _updatePatientDetails(context);

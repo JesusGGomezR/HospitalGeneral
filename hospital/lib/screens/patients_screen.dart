@@ -73,7 +73,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Editar Paciente'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -129,7 +129,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
                           trailing: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
-                                    Colors.deepPurple)),
+                                    Color.fromARGB(255, 27, 89, 121))),
                             onPressed: () {
                               // Navegar a la pantalla de edición con el paciente seleccionado
                               Navigator.push(
@@ -152,19 +152,28 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
             ),
           ),
           SizedBox(height: 16.0), // Ajusta el espacio según tus necesidades
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
-            onPressed: () {
-              // Navegar a la pantalla para agregar un nuevo paciente
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddPatientScreen(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 15, 15, 25),
+            child: Container(
+              alignment: Alignment.centerRight, // Alineación a la derecha
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                    Color.fromARGB(255, 27, 89, 121),
+                  ),
                 ),
-              );
-            },
-            child: Text('Agregar Paciente'),
+                onPressed: () {
+                  // Navegar a la pantalla para agregar un nuevo paciente
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddPatientScreen(),
+                    ),
+                  );
+                },
+                child: Text('Agregar Paciente'),
+              ),
+            ),
           ),
         ],
       ),

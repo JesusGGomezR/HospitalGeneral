@@ -12,16 +12,17 @@ class AddPatientScreen extends StatelessWidget {
   final TextEditingController _generoController = TextEditingController();
   final TextEditingController _estatusController = TextEditingController();
   final TextEditingController _derechoHabiendoController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _afiliacionController = TextEditingController();
   final TextEditingController _tipoSanguineoController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _diagnosticoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Agregar Paciente'),
       ),
       body: SingleChildScrollView(
@@ -124,6 +125,9 @@ class AddPatientScreen extends StatelessWidget {
       ),
       persistentFooterButtons: [
         ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121))),
           onPressed: () {
             _addPatient(context);
           },
@@ -134,7 +138,8 @@ class AddPatientScreen extends StatelessWidget {
   }
 
   void _addPatient(BuildContext context) async {
-    final patientProvider = Provider.of<PatientProvider>(context, listen: false);
+    final patientProvider =
+        Provider.of<PatientProvider>(context, listen: false);
     Patient newPatient = Patient(
       curp: _curpController.text,
       nombre: _nombreController.text,
@@ -172,5 +177,4 @@ class AddPatientScreen extends StatelessWidget {
 
     Navigator.pop(context);
   }
-
 }
