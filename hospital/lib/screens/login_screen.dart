@@ -4,6 +4,8 @@ import 'package:hospital/widgets/input_decoration.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:hospital/provider/activity_log.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -15,6 +17,9 @@ class LoginScreen extends StatelessWidget {
   Future<void> loginUser(
       String username, String password, BuildContext context) async {
     String hashedPassword = sha256.convert(utf8.encode(password)).toString();
+    final activityLogProvider =
+        Provider.of<ActivityLogProvider>(context, listen: false);
+
     print(hashedPassword);
     // ignore: unnecessary_null_comparison
     if (curpController != null && hashedPassword != null) {
@@ -31,10 +36,13 @@ class LoginScreen extends StatelessWidget {
 
         if (result['status'] == 'success') {
           // Usuario autenticado, puedes redirigir al usuario a la pantalla principal o realizar otras acciones
-
+          activityLogProvider.logActivity(
+              'Inicio de sesión exitoso para el usuario $username');
+          // ignore: use_build_context_synchronously
           Navigator.pushReplacementNamed(context, 'home');
         } else {
           // Autenticación fallida, muestra un mensaje de error
+          // ignore: use_build_context_synchronously
           showDialog(
             context: context,
             builder: (context) => AlertDialog(

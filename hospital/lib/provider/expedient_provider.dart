@@ -53,6 +53,7 @@ class ExpedientProvider extends ChangeNotifier {
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       // Si la respuesta no es un mapa, devolver un mapa de error
+      // ignore: unnecessary_type_check
       if (responseData is! Map<String, dynamic>) {
         return {'status': 'error', 'error': 'Error updating expedient data'};
       }
@@ -76,6 +77,7 @@ class ExpedientProvider extends ChangeNotifier {
         final List<dynamic> expedientDataList = json.decode(response.body);
 
         // Asegúrate de que patientDataList es una lista
+        // ignore: unnecessary_type_check
         if (expedientDataList is List) {
           // Mapea cada elemento de la lista a un objeto Patient
           final List<Expedient> expedients =
