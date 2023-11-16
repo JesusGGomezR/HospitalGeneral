@@ -1,8 +1,8 @@
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital/widgets/input_decoration.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:hospital/screens/edituser_screen.dart';
 import 'dart:async';
 
 class LoginScreen extends StatelessWidget {
@@ -14,13 +14,15 @@ class LoginScreen extends StatelessWidget {
 
   Future<void> loginUser(
       String username, String password, BuildContext context) async {
+    String hashedPassword = sha256.convert(utf8.encode(password)).toString();
+    print(hashedPassword);
     // ignore: unnecessary_null_comparison
-    if (curpController != null && passwordController != null) {
+    if (curpController != null && hashedPassword != null) {
       final response = await http.post(
         Uri.parse('http://192.168.1.82/login.php'),
         body: {
           'curp': curpController.text,
-          'password': passwordController.text
+          'password': hashedPassword,
         },
       );
 
