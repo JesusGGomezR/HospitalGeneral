@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hospital/widgets/input_decoration.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:hospital/screens/edituser_screen.dart';
 import 'dart:async';
 
 class LoginScreen extends StatelessWidget {

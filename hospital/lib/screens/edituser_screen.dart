@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/models/user_model.dart';
@@ -38,9 +41,11 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
         backgroundColor: Colors.deepPurple,
         title: Text('Editar Detalles del Usuario'),
       ),
-      body: Form(
-        key: _formKey,
-        child: formEditUser(context),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: formEditUser(context),
+        ),
       ),
     );
   }
@@ -100,7 +105,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
               return null;
             },
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           _buildTextField(
             'Contraseña',
             _contrasenaController,
@@ -109,6 +114,13 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa la contraseña';
               }
+              // Encriptar la contraseña usando SHA-256
+              String hashedPassword =
+                  sha256.convert(utf8.encode(value)).toString();
+              _contrasenaController.text = hashedPassword;
+              // Puedes almacenar la contraseña encriptada o usarla según tus necesidades
+              print('Contraseña encriptada: $hashedPassword');
+
               return null;
             },
             obscureText: true,
@@ -116,7 +128,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
           SizedBox(height: 32.0),
           Center(
             child: ElevatedButton(
-              style: ButtonStyle(
+              style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
               ),
               onPressed: () {
@@ -126,7 +138,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                   _updateUserDetails(context);
                 }
               },
-              child: Text('Guardar Cambios'),
+              child: const Text('Guardar Cambios'),
             ),
           ),
         ],
