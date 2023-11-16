@@ -18,6 +18,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   late TextEditingController _curpController;
   late TextEditingController _correoController;
   late TextEditingController _contrasenaController;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -37,7 +38,10 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
         backgroundColor: Colors.deepPurple,
         title: Text('Editar Detalles del Usuario'),
       ),
-      body: formEditUser(context),
+      body: Form(
+        key: _formKey,
+        child: formEditUser(context),
+      ),
     );
   }
 
@@ -47,18 +51,66 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTextField('Nivel (rol)', _rolController, 'Ingresa el rol'),
+          _buildTextField(
+            'Nivel (rol)',
+            _rolController,
+            'Ingresa el rol',
+            (value) {
+              if (value!.isEmpty) {
+                return 'Por favor, ingresa el rol';
+              }
+              return null;
+            },
+          ),
           SizedBox(height: 16.0),
-          _buildTextField('Nombre', _nombreController, 'Ingrese el nombre'),
+          _buildTextField(
+            'Nombre',
+            _nombreController,
+            'Ingrese el nombre',
+            (value) {
+              if (value!.isEmpty) {
+                return 'Por favor, ingresa el nombre';
+              }
+              return null;
+            },
+          ),
           SizedBox(height: 16.0),
-          _buildTextField('CURP', _curpController, 'Ingrese el CURP'),
+          _buildTextField(
+            'CURP',
+            _curpController,
+            'Ingrese el CURP',
+            (value) {
+              if (value!.isEmpty) {
+                return 'Por favor, ingresa el CURP';
+              } else if (value.length < 18) {
+                return 'El CURP debe tener 18 caracteres';
+              }
+              return null;
+            },
+          ),
           SizedBox(height: 16.0),
-          _buildTextField('Correo', _correoController, 'Ingrese el correo'),
+          _buildTextField(
+            'Correo',
+            _correoController,
+            'Ingrese el correo',
+            (value) {
+              if (value!.isEmpty || !value.contains('@')) {
+                return 'Por favor, ingresa un correo válido';
+              }
+              return null;
+            },
+          ),
           SizedBox(height: 16.0),
           _buildTextField(
             'Contraseña',
             _contrasenaController,
             'Ingrese la contraseña',
+            (value) {
+              if (value!.isEmpty) {
+                return 'Por favor, ingresa la contraseña';
+              }
+              return null;
+            },
             obscureText: true,
           ),
           SizedBox(height: 32.0),
@@ -68,8 +120,11 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                 backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
               ),
               onPressed: () {
-                // Actualizar los detalles del usuario utilizando el UserProvider
-                _updateUserDetails(context);
+                if (_formKey.currentState != null &&
+                    _formKey.currentState!.validate()) {
+                  // Todas las validaciones son exitosas, procesar los datos
+                  _updateUserDetails(context);
+                }
               },
               child: Text('Guardar Cambios'),
             ),
@@ -82,24 +137,46 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   Widget _buildTextField(
     String label,
     TextEditingController controller,
-    String hintText, {
+    String hintText,
+    String? Function(String?)? validator, {
     bool obscureText = false,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        TextField(
-          controller: controller,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            hintText: hintText,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14.0),
+        color: Colors.grey[100],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 16.0,
+            ),
           ),
-        ),
-      ],
+          TextFormField(
+            style: TextStyle(color: Colors.black),
+            controller: controller,
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.black),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey),
+              ),
+            ),
+            validator: validator,
+          ),
+        ],
+      ),
     );
   }
 
