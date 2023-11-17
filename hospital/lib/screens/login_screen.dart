@@ -16,9 +16,9 @@ class LoginScreen extends StatelessWidget {
 
   Future<void> loginUser(
       String username, String password, BuildContext context) async {
+    String hashedPassword = sha256.convert(utf8.encode(password)).toString();
     final activityLogProvider =
         Provider.of<ActivityLogProvider>(context, listen: false);
-    String hashedPassword = sha256.convert(utf8.encode(password)).toString();
 
     print(hashedPassword);
     // ignore: unnecessary_null_comparison

@@ -1,14 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ActivityLogProvider extends ChangeNotifier {
   static const String baseUrl = 'http://192.168.1.82/activity_log.php';
 
-  List<String> activityLog = [];
-
   Future<bool> logActivity(String message) async {
-    activityLog.add(message);
-    notifyListeners();
     try {
       final response = await http.post(
         Uri.parse('$baseUrl?action=logActivity'),
@@ -16,23 +13,27 @@ class ActivityLogProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        final responseData = response.body;
-        if (responseData == 'success') {
-          print('Actividad registrada exitosamente');
-          return true;
-        } else {
-          final error = responseData;
-          print(
-              'Error al registrar actividad: ${error ?? 'Error desconocido'}');
-          return false;
-        }
+        print('Actividad registrada exitosamente');
+        print('Respuesta del servidor: ${response.body}');
+        return true;
       } else {
-        print('Error al registrar.actividad: ${response.statusCode}');
+        print('Error al registrar actividad: ${response.statusCode}');
+        print('Respuesta del servidor: ${response.body}');
         return false;
       }
     } catch (e) {
-      print('Error al registrar-actividad: ${e.toString()}');
+      print('Error al registrar actividad: $e');
       return false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getLogs() async {
+    final response = await http.get('$baseUrl?action=getLogs' as Uri);
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      return [];
     }
   }
 }
