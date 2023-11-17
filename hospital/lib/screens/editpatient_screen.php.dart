@@ -6,7 +6,7 @@ import 'package:hospital/provider/patient_provider.dart'; // Asegúrate de impor
 class EditPatientDetailsScreen extends StatefulWidget {
   final Patient patient;
 
-  EditPatientDetailsScreen({required this.patient});
+  const EditPatientDetailsScreen({super.key, required this.patient});
 
   @override
   _EditPatientDetailsScreenState createState() =>

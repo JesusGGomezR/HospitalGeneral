@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
     MenuOption("Salir", Icons.output, (BuildContext context) {
       // Lógica para la opción "Salir"
       print('Clic en Salir');
+      Navigator.pushReplacementNamed(context as BuildContext, 'login');
       // Puedes agregar aquí la navegación o la lógica deseada
     }),
   ];
