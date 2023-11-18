@@ -8,8 +8,9 @@ class ActivityLogProvider extends ChangeNotifier {
   Future<bool> logActivity(String message) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl?action=logActivity'),
-        body: {'message': message},
+        Uri.parse(baseUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'message': message}),
       );
 
       if (response.statusCode == 200) {
@@ -28,7 +29,7 @@ class ActivityLogProvider extends ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> getLogs() async {
-    final response = await http.get('$baseUrl?action=getLogs' as Uri);
+    final response = await http.get(Uri.parse('$baseUrl?action=getLogs'));
 
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -37,3 +38,4 @@ class ActivityLogProvider extends ChangeNotifier {
     }
   }
 }
+

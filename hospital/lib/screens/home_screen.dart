@@ -4,8 +4,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final List<MenuOption> menuOptions = [
-    MenuOption("Pacientes", Icons.supervised_user_circle,
-        (BuildContext context) {
+    MenuOption("Pacientes", Icons.personal_injury, (BuildContext context) {
       // Lógica para la opción "Pacientes"
       print('Clic en Pacientes');
       Navigator.pushReplacementNamed(
@@ -22,7 +21,7 @@ class HomeScreen extends StatelessWidget {
       print('Clic en Manual');
       // Puedes agregar aquí la navegación o la lógica deseada
     }),
-    MenuOption("Ajustes", Icons.settings, (BuildContext context) {
+    MenuOption("Acerca de", Icons.person_search, (BuildContext context) {
       // Lógica para la opción "Ajustes"
       print('Clic en Ajustes');
       // Puedes agregar aquí la navegación o la lógica deseada
@@ -37,52 +36,78 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final size = MediaQuery.of(context).size; // Tamaño de la pantalla
+    final size = MediaQuery.of(context).size; // Tamaño de la pantalla
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Administrador'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 25.0,
-            mainAxisSpacing: 20.0,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/background_image.jpg'), // Reemplaza con la ruta de tu imagen
+            fit: BoxFit.cover,
           ),
-          itemCount: menuOptions.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => menuOptions[index].onTap(context),
-              child: Card(
-                elevation: 5.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      menuOptions[index].icon,
-                      size: 50.0,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      menuOptions[index].name,
-                      style: TextStyle(
-                        fontSize: 16.0,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Container(
+                alignment: Alignment.center, // Centra el contenido del Container
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: constraints.maxWidth > 600 ? 5 : 2,
+                    crossAxisSpacing: 25.0,
+                    mainAxisSpacing: 20.0,
+                    childAspectRatio: 1.0,
+                  ),
+                  itemCount: menuOptions.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => menuOptions[index].onTap(context),
+                      child: Card(
+                        elevation: 1.0,
+                        color: Colors.white.withOpacity(0.7), // Ajusta el valor de opacidad según sea necesario
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                menuOptions[index].icon,
+                                size: constraints.maxWidth > 600
+                                    ? size.width * 0.05
+                                    : size.width * 0.13,
+                              ),
+                              SizedBox(height: 5.0),
+                              Text(
+                                menuOptions[index].name,
+                                style: TextStyle(
+                                  fontSize: constraints.maxWidth > 600
+                                      ? size.width * 0.02
+                                      : size.width * 0.05,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
   }
+
 }
 
 class MenuOption {

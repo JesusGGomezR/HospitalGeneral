@@ -1,12 +1,12 @@
 class Activity {
-  final int id;
-  final String message;
-  final DateTime timestamp;
+  final  id;
+  final  message;
+  final  timestamp;
 
   Activity({
-    required this.id,
-    required this.message,
-    required this.timestamp,
+     this.id,
+     this.message,
+     this.timestamp,
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) {
