@@ -127,6 +127,21 @@ class PatientProvider extends ChangeNotifier {
           'afiliacion': newPatient.afiliacion,
           'tipo_sanguineo': newPatient.tipoSanguineo,
           'diagnostico': newPatient.diagnostico,
+
+          // Agrega las nuevas propiedades para "consultasingreso" y "diagnosticosembarazadas"
+          'fecha_creacion_exp': newPatient.fechaCreacionExp,
+          'fecha_ingreso': newPatient.fechaIngreso,
+          'dxi': newPatient.dxi,
+          'medico_ingreso': newPatient.medicoIngreso,
+
+          'fecha_ultima_revision_exp': newPatient.fechaUltimaRevisionExp,
+          'fecha_primera_revision': newPatient.fechaPrimeraRevision,
+          'fecha_ultima_revision': newPatient.fechaUltimaRevision,
+          'fecha_puerperio': newPatient.fechaPuerperio,
+          'diagnostico_embarazada': newPatient.diagnosticoEmbarazada,
+          'riesgo': newPatient.riesgo,
+          'traslado': newPatient.traslado,
+          'apeo': newPatient.apeo,
         }),
       );
 

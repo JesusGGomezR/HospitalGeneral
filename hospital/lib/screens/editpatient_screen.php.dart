@@ -204,6 +204,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
               return null;
             },
           ),
+
           _buildTextField(
             'Diagnóstico',
             _diagnosticoController,
@@ -215,6 +216,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
               return null;
             },
           ),
+
           SizedBox(height: 32.0),
         ],
       ),

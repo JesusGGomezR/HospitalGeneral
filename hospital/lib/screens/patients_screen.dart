@@ -76,7 +76,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 27, 89, 121),
-        title: Text('Editar Paciente'),
+        title: Text('Buscar pacientes'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
