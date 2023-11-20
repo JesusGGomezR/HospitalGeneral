@@ -30,7 +30,7 @@ class PatientProvider extends ChangeNotifier {
           derechoHabiendo: patientData['derecho_habiendo'],
           afiliacion: patientData['afiliacion'],
           tipoSanguineo: patientData['tipo_sanguineo'],
-          diagnostico: patientData['diagnostico'],
+          //diagnostico: patientData['diagnostico'],
         );
 
         notifyListeners();
@@ -59,7 +59,7 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': updatedPatient.derechoHabiendo,
           'afiliacion': updatedPatient.afiliacion,
           'tipo_sanguineo': updatedPatient.tipoSanguineo,
-          'diagnostico': updatedPatient.diagnostico,
+          //'diagnostico': updatedPatient.diagnostico,
         }),
       );
 
@@ -126,7 +126,7 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': newPatient.derechoHabiendo,
           'afiliacion': newPatient.afiliacion,
           'tipo_sanguineo': newPatient.tipoSanguineo,
-          'diagnostico': newPatient.diagnostico,
+          //'diagnostico': newPatient.diagnostico,
 
           // Agrega las nuevas propiedades para "consultasingreso" y "diagnosticosembarazadas"
           'fecha_creacion_exp': newPatient.fechaCreacionExp,
@@ -138,10 +138,13 @@ class PatientProvider extends ChangeNotifier {
           'fecha_primera_revision': newPatient.fechaPrimeraRevision,
           'fecha_ultima_revision': newPatient.fechaUltimaRevision,
           'fecha_puerperio': newPatient.fechaPuerperio,
-          'diagnostico_embarazada': newPatient.diagnosticoEmbarazada,
+          //'diagnostico_embarazada': newPatient.diagnosticoEmbarazada,
           'riesgo': newPatient.riesgo,
           'traslado': newPatient.traslado,
           'apeo': newPatient.apeo,
+
+          'diagnostico': newPatient.diagnostico,
+          'fecha_registro': newPatient.fecha_registro,
         }),
       );
 

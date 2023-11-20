@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hospital/models/patient_model.dart';
 import 'package:hospital/provider/patient_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 class AddPatientScreen extends StatefulWidget {
   @override
@@ -19,7 +21,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _derechoHabiendoController = TextEditingController();
   final TextEditingController _afiliacionController = TextEditingController();
   final TextEditingController _tipoSanguineoController = TextEditingController();
-  final TextEditingController _diagnosticoController = TextEditingController();
+  //final TextEditingController _diagnosticoController = TextEditingController();
 
   // Nuevos controladores para "consultasingreso" y "diagnosticosembarazadas"
   final TextEditingController _fechaCreacionExpController = TextEditingController();
@@ -31,12 +33,17 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _fechaPrimeraRevisionController = TextEditingController();
   final TextEditingController _fechaUltimaRevisionController = TextEditingController();
   final TextEditingController _fechaPuerperioController = TextEditingController();
-  final TextEditingController _diagnosticoEmbarazadaController = TextEditingController();
+  //final TextEditingController _diagnosticoEmbarazadaController = TextEditingController();
   final TextEditingController _riesgoController = TextEditingController();
   final TextEditingController _trasladoController = TextEditingController();
   final TextEditingController _apeoController = TextEditingController();
 
+  final TextEditingController _diagnostico = TextEditingController();
+
   late TabController _tabController;
+
+
+  DateTime _selectedDateTime = DateTime.now();
 
   @override
   void initState() {
@@ -71,7 +78,6 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
             unselectedLabelColor: Colors.black, // Color del texto no seleccionado
           ),
 
-
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -98,7 +104,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       ),
     );
   }
-
+//TODO-------------------------------------FORMULARIO PACIENTE---------------------------------------
   // Funciones para construir los formularios de cada pestaña
   Widget _buildPatientForm() {
     return SingleChildScrollView(
@@ -107,6 +113,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             _buildTextField(
               'CURP',
               _curpController,
@@ -118,7 +125,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'El CURP debe tener 18 caracteres';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Nombre',
@@ -129,7 +136,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el nombre';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Apellidos',
@@ -140,7 +147,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa los apellidos';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Teléfono',
@@ -155,7 +162,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'El teléfono debe tener 10 digitos';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Domicilio',
@@ -166,7 +173,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el domicilio';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Género',
@@ -177,7 +184,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el genero Masculino / Femenino';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Estatus',
@@ -188,7 +195,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el estado Activo/Inactivo';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Derecho Habiendo',
@@ -199,7 +206,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el derecho habiendo';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Afiliación',
@@ -210,7 +217,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa la afiliacion en caso de no tener escribe Ninguno';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Tipo Sanguíneo',
@@ -221,18 +228,18 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                   return 'Por favor, ingresa el tipo sanguíneo';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Diagnóstico',
-              _diagnosticoController,
+              _diagnostico,                 //TODO---------Debe de estar en editar pacientes
               'Ingrese el diagnóstico',
               (value) {
                 if (value!.isEmpty) {
                   return 'Por favor, ingresa el diagnostico';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             SizedBox(height: 32.0),
           ],
@@ -240,7 +247,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       ),
     );
   }
-
+//TODO-------------------------------------FORMULARIO INGRESO---------------------------------------
   Widget _buildFirstConsultationForm() {
     return SingleChildScrollView(
       child: Padding(
@@ -248,31 +255,15 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField(
+            _buildDate(
               'Fecha del expediente',            //TODO---------Este tiene como proposito ser un contador
               _fechaCreacionExpController,
               'Formato: YYYY-MM-DD',
-              (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
             ),
-            _buildTextField(
+            _buildDateTimeField(
               'Fecha de ingreso',
               _fechaIngresoController,
-              'Formato: YYYY-MM-DD',
-                  (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
+              'Formato: YYYY-MM-DD HH:MM:SS',
             ),
             _buildTextField(
               'DXI',
@@ -280,12 +271,10 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               'Ingrese el DXI',
                   (value) {
                 if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
+                  return '';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Medico de ingreso',
@@ -293,19 +282,17 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               'Ingrese el Medico de ingreso',
                   (value) {
                 if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
+                  return '';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
           ],
         ),
       ),
     );
   }
-
+//TODO-------------------------------------FORMULARIO EMBARAZADA---------------------------------------
   Widget _buildPregnantForm() {
     return SingleChildScrollView(
       child: Padding(
@@ -313,70 +300,27 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField(
+            _buildDate(
               'Fecha de la ultimo expediente',
               _fechaUltimaRevisionExpController,
               'Formato: YYYY-MM-DD',
-              (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
             ),
-            _buildTextField(
+
+            _buildDateTimeField(
               'Fecha de la primera consulta',
               _fechaPrimeraRevisionController,
-              'Formato: YYYY-MM-DD',
-                  (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
+              'Formato: YYYY-MM-DD HH:MM:SS',   //TODO---------Con formato YYYY-MM-DD HH:MM:SS
             ),
-            _buildTextField(
+
+            _buildDateTimeField(
               'Fecha de ultima consulta',       //TODO---------Debe de estar en editar pacientes
-              _fechaUltimaRevisionController,
-              'Formato: YYYY-MM-DD',
-                  (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
+              _fechaUltimaRevisionController,   //TODO---------Con formato YYYY-MM-DD HH:MM:SS
+              'Formato: YYYY-MM-DD HH:MM:SS',
             ),
-            _buildTextField(
+            _buildDateTimeField(
               'Fecha puerperio',
               _fechaPuerperioController,      //TODO---------Este no tiene sentido en add_patient
-              'Formato: YYYY-MM-DD',
-                  (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
-            ),
-            _buildTextField(
-              'Diagnostico',                  //TODO---------Debe de estar en editar pacientes
-              _diagnosticoEmbarazadaController,
-              'Ingrese ',
-                  (value) {
-                if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
-                }
-                return null;
-              },
+              'Formato: YYYY-MM-DD HH:MM:SS', //TODO---------Con formato YYYY-MM-DD HH:MM:SS
             ),
             _buildTextField(
               'Riesgo',                       //TODO---------Este debe ser null, y debe estar en editar pacientes
@@ -384,12 +328,10 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               'Ingrese ',
                   (value) {
                 if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
+                  return '';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Traslado',                     //TODO---------Este debe ser null, y debe estar en editar pacientes
@@ -397,12 +339,10 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               'Ingrese ',
                   (value) {
                 if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
+                  return '';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
             _buildTextField(
               'Apeo',
@@ -410,12 +350,10 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               'Ingrese ',
                   (value) {
                 if (value!.isEmpty) {
-                  return 'Por favor, ingresa el CURP';
-                } else if (value.length < 18) {
-                  return 'El CURP debe tener 18 caracteres';
+                  return '';
                 }
                 return null;
-              },
+              },readOnly: true,
             ),
           ],
         ),
@@ -424,13 +362,117 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   }
 
   //TODO--------------------------PERSONALIZAR CAMPOS---------------------------
+  Widget _buildDateTimeField(String label, TextEditingController controller, String hintText) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14.0),
+        color: Color.fromARGB(255, 209, 209, 211),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 16.0,
+            ),
+          ),
+          DateTimeField(
+            controller: controller,
+            format: DateFormat("yyyy-MM-dd HH:mm:ss"),
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.black),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey),
+              ),
+            ),
+            onShowPicker: (context, currentValue) async {
+              DateTime? date = await showDatePicker(
+                context: context,
+                firstDate: DateTime(1900),
+                initialDate: currentValue ?? DateTime.now(),
+                lastDate: DateTime(2101),
+              );
+              if (date != null) {
+                TimeOfDay? time = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                );
+                if (time != null) {
+                  // Combina la fecha y la hora seleccionadas
+                  date = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+                }
+              }
+              return date;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget _buildDate(String label, TextEditingController controller, String hintText) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14.0),
+        color: Color.fromARGB(255, 209, 209, 211),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 16.0,
+            ),
+          ),
+          DateTimeField(
+            controller: controller,
+            format: DateFormat("yyyy-MM-dd"),
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.black),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey),
+              ),
+            ),
+            onShowPicker: (context, currentValue) async {
+              return showDatePicker(
+                context: context,
+                firstDate: DateTime(1900),
+                initialDate: currentValue ?? DateTime.now(),
+                lastDate: DateTime(2101),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+  
 
   Widget _buildTextField(
     String label,
     TextEditingController controller,
     String hintText,
     String? Function(String?)? validator, {
-    bool obscureText = false,
+    bool obscureText = false, required bool readOnly,
   }) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -472,6 +514,23 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
 
   //TODO------------------------------------------------------------------------
 
+  //método _selectDate que abrirá el selector de fecha
+  Future<void> _selectDate(TextEditingController controller, BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      // Formatea la fecha seleccionada antes de asignarla al controlador
+      String formattedDate = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      controller.text = formattedDate;
+    }
+  }
+
+
   void _addPatient(BuildContext context) async {
     final patientProvider =
         Provider.of<PatientProvider>(context, listen: false);
@@ -486,7 +545,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       derechoHabiendo: _derechoHabiendoController.text,
       afiliacion: _afiliacionController.text,
       tipoSanguineo: _tipoSanguineoController.text,
-      diagnostico: _diagnosticoController.text,
+      //diagnostico: _diagnosticoController.text,
 
       fechaCreacionExp: _fechaCreacionExpController.text,
       fechaIngreso: _fechaIngresoController.text,
@@ -497,10 +556,12 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       fechaPrimeraRevision: _fechaPrimeraRevisionController.text,
       fechaUltimaRevision: _fechaUltimaRevisionController.text,
       fechaPuerperio: _fechaPuerperioController.text,
-      diagnosticoEmbarazada: _diagnosticoEmbarazadaController.text,
+      //diagnosticoEmbarazada: _diagnosticoEmbarazadaController.text,
       riesgo: _riesgoController.text,
       traslado: _trasladoController.text,
       apeo: _apeoController.text,
+
+      diagnostico: _diagnostico.text,
     );
 
     try {

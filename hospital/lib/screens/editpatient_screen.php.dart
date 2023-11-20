@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:hospital/models/patient_model.dart';
 import 'package:hospital/provider/patient_provider.dart';
 
+
 class EditPatientDetailsScreen extends StatefulWidget {
   final Patient patient;
 
@@ -14,7 +15,8 @@ class EditPatientDetailsScreen extends StatefulWidget {
       _EditPatientDetailsScreenState();
 }
 
-class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
+class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
+    with SingleTickerProviderStateMixin {
   late TextEditingController _curpController;
   late TextEditingController _nombreController;
   late TextEditingController _apellidosController;
@@ -26,29 +28,36 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   late TextEditingController _afiliacionController;
   late TextEditingController _tipoSanguineoController;
   late TextEditingController _diagnosticoController;
+
+  late TabController _tabController;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+
     // Inicializa los controladores con los datos actuales del paciente
     _curpController = TextEditingController(text: widget.patient.curp);
     _nombreController = TextEditingController(text: widget.patient.nombre);
-    _apellidosController =
-        TextEditingController(text: widget.patient.apellidos);
+    _apellidosController = TextEditingController(text: widget.patient.apellidos);
     _telefonoController = TextEditingController(text: widget.patient.telefono);
-    _domicilioController =
-        TextEditingController(text: widget.patient.domicilio);
+    _domicilioController = TextEditingController(text: widget.patient.domicilio);
     _generoController = TextEditingController(text: widget.patient.genero);
     _estatusController = TextEditingController(text: widget.patient.estatus);
-    _derechoHabiendoController =
-        TextEditingController(text: widget.patient.derechoHabiendo);
-    _afiliacionController =
-        TextEditingController(text: widget.patient.afiliacion);
-    _tipoSanguineoController =
-        TextEditingController(text: widget.patient.tipoSanguineo);
-    _diagnosticoController =
-        TextEditingController(text: widget.patient.diagnostico);
+    _derechoHabiendoController = TextEditingController(text: widget.patient.derechoHabiendo);
+    _afiliacionController = TextEditingController(text: widget.patient.afiliacion);
+    _tipoSanguineoController = TextEditingController(text: widget.patient.tipoSanguineo);
+    _diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
+
+    // Inicializa el TabController
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,18 +66,39 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Editar Detalles del Paciente'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Paciente'),
+            Tab(text: 'Primera Consulta'),
+            Tab(text: 'Embarazadas'),
+          ],
+          labelColor: Color.fromARGB(255, 27, 89, 121),
+          unselectedLabelColor: Colors.black,
+        ),
       ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: formEditPatient(context),
+          child: Column(
+            children: [
+              // Contenido de la pestaña de Paciente
+              _buildPatientForm(),
+
+              // Contenido de la pestaña de Primera Consulta
+              _buildFirstConsultationForm(),
+
+              // Contenido de la pestaña de Embarazadas
+              _buildPregnantForm(),
+            ],
+          ),
         ),
       ),
       persistentFooterButtons: [
         ElevatedButton(
           style: ButtonStyle(
-              backgroundColor:
-                  MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121))),
+            backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121)),
+          ),
           onPressed: () {
             if (_formKey.currentState != null &&
                 _formKey.currentState!.validate()) {
@@ -81,144 +111,186 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
       ],
     );
   }
+//TODO------------------------------------------------------------------------------------------------
 
-  Padding formEditPatient(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTextField(
-            'CURP',
-            _curpController,
-            'Ingrese el CURP',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el CURP';
-              } else if (value.length < 18) {
-                return 'El CURP debe tener 18 caracteres';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Nombre',
-            _nombreController,
-            'Ingrese el nombre',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el nombre';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Apellidos',
-            _apellidosController,
-            'Ingrese los apellidos',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa los apellidos';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Teléfono',
-            _telefonoController,
-            'Ingrese el teléfono',
-            (value) {
-              if (value == null || value.isEmpty || !isNumeric(value)) {
-                return 'Por favor, ingresa el teléfono';
-              } else if (value.length < 10) {
-                return 'El teléfono debe tener 10 digitos';
-              } else if (value.length > 10) {
-                return 'El teléfono debe tener 10 digitos';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Domicilio',
-            _domicilioController,
-            'Ingrese el domicilio',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el domicilio';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Género',
-            _generoController,
-            'Ingrese el género',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el genero Masculino / Femenino';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Estatus',
-            _estatusController,
-            'Ingrese el estatus',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el estado Activo/Inactivo';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Derecho Habiendo',
-            _derechoHabiendoController,
-            'Ingrese el derecho habiendo',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el derecho habiendo';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Afiliación',
-            _afiliacionController,
-            'Ingrese la afiliación',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa la afiliacion en caso de no tener escribe Ninguno';
-              }
-              return null;
-            },
-          ),
-          _buildTextField(
-            'Tipo Sanguíneo',
-            _tipoSanguineoController,
-            'Ingrese el tipo sanguíneo',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el tipo sanguíneo';
-              }
-              return null;
-            },
-          ),
+  Widget _buildPatientForm() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTextField(
+              'CURP',
+              _curpController,
+              'Ingrese el CURP',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el CURP';
+                } else if (value.length < 18) {
+                  return 'El CURP debe tener 18 caracteres';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Nombre',
+              _nombreController,
+              'Ingrese el nombre',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el nombre';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Apellidos',
+              _apellidosController,
+              'Ingrese los apellidos',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa los apellidos';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Teléfono',
+              _telefonoController,
+              'Ingrese el teléfono',
+                  (value) {
+                if (value == null || value.isEmpty || !isNumeric(value)) {
+                  return 'Por favor, ingresa el teléfono';
+                } else if (value.length < 10) {
+                  return 'El teléfono debe tener 10 dígitos';
+                } else if (value.length > 10) {
+                  return 'El teléfono debe tener 10 dígitos';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Domicilio',
+              _domicilioController,
+              'Ingrese el domicilio',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el domicilio';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Género',
+              _generoController,
+              'Ingrese el género',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el género Masculino / Femenino';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Estatus',
+              _estatusController,
+              'Ingrese el estatus',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el estado Activo/Inactivo';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Derecho Habiendo',
+              _derechoHabiendoController,
+              'Ingrese el derecho habiendo',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el derecho habiendo';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Afiliación',
+              _afiliacionController,
+              'Ingrese la afiliación',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa la afiliación en caso de no tener escribe Ninguno';
+                }
+                return null;
+              },
+            ),
+            _buildTextField(
+              'Tipo Sanguíneo',
+              _tipoSanguineoController,
+              'Ingrese el tipo sanguíneo',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el tipo sanguíneo';
+                }
+                return null;
+              },
+            ),
 
-          _buildTextField(
-            'Diagnóstico',
-            _diagnosticoController,
-            'Ingrese el diagnóstico',
-            (value) {
-              if (value!.isEmpty) {
-                return 'Por favor, ingresa el diagnostico';
-              }
-              return null;
-            },
-          ),
+            _buildTextField(
+              'Diagnóstico',
+              _diagnosticoController,
+              'Ingrese el diagnóstico',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el diagnóstico';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-          SizedBox(height: 32.0),
-        ],
+  //TODO------------------------------------------------------------------------------------------------
+
+  Widget _buildFirstConsultationForm() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+                  _buildTextField(
+                    'CURP',
+                    _curpController,
+                    'Ingrese el CURP',
+                        (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa el CURP';
+                      } else if (value.length < 18) {
+                        return 'El CURP debe tener 18 caracteres';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+            ),
+        ),
+    );
+  }
+
+  Widget _buildPregnantForm() {                   //TODO----------Cambiar nombre
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          ],
+        ),
       ),
     );
   }
@@ -285,7 +357,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
       derechoHabiendo: _derechoHabiendoController.text,
       afiliacion: _afiliacionController.text,
       tipoSanguineo: _tipoSanguineoController.text,
-      diagnostico: _diagnosticoController.text,
+      //diagnostico: _diagnosticoController.text,
     );
 
     try {
