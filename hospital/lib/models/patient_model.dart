@@ -34,7 +34,7 @@ class Patient {
   final medicoEgreso;
   final observaciones;
 
-  // Propiedades para la tabla "expediente"
+  // Propiedades para la tabla "Diagnostico"
   final diagnostico;
   final fecha_registro;
 
@@ -63,6 +63,7 @@ class Patient {
     this.fechaPrimeraRevision,
     this.fechaUltimaRevision,
     this.fechaPuerperio,
+
     //this.diagnosticoEmbarazada,
     this.riesgo,
     this.traslado,

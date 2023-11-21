@@ -497,7 +497,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: Colors.grey),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
