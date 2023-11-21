@@ -136,4 +136,34 @@ class ExpedientProvider extends ChangeNotifier {
       return {'status': 'error', 'error': 'Error updating expedient data'};
     }
   }
+
+  Future<List<Expedient>> getExpedientsForPatient(patientId) async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.1.82/get_expedient.php?patientId=$patientId'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> expedientDataList = json.decode(response.body);
+
+        if (expedientDataList is List) {
+          final List<Expedient> expedients =
+          expedientDataList.map((expedientData) {
+            return Expedient.fromJson(expedientData);
+          }).toList();
+
+          return expedients;
+        } else {
+          print('Error: La respuesta del servidor no es una lista');
+          return [];
+        }
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        return [];
+      }
+    } catch (error) {
+      print('Error: $error');
+      return [];
+    }
+  }
 }
+

@@ -59,7 +59,7 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': updatedPatient.derechoHabiendo,
           'afiliacion': updatedPatient.afiliacion,
           'tipo_sanguineo': updatedPatient.tipoSanguineo,
-          //'diagnostico': updatedPatient.diagnostico,
+          'diagnostico': updatedPatient.diagnostico,
         }),
       );
 

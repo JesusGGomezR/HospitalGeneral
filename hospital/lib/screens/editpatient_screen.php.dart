@@ -309,7 +309,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       derechoHabiendo: _derechoHabiendoController.text,
       afiliacion: _afiliacionController.text,
       tipoSanguineo: _tipoSanguineoController.text,
-      //diagnostico: _diagnosticoController.text,
+      diagnostico: _diagnosticoController.text,
     );
 
     try {

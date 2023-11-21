@@ -7,10 +7,10 @@ class Expedient {
 
   Expedient({
     this.id_expediente,
-    required this.clave_expediente,
-    required this.id_paciente,
-    required this.tipo,
-    required this.file,
+    this.clave_expediente,
+    this.id_paciente,
+    this.tipo,
+    this.file,
   });
 
   factory Expedient.fromJson(Map<String, dynamic> json) {
