@@ -21,9 +21,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _derechoHabiendoController = TextEditingController();
   final TextEditingController _afiliacionController = TextEditingController();
   final TextEditingController _tipoSanguineoController = TextEditingController();
-  //final TextEditingController _diagnosticoController = TextEditingController();
 
-  // Nuevos controladores para "consultasingreso" y "diagnosticosembarazadas"
   final TextEditingController _fechaCreacionExpController = TextEditingController();
   final TextEditingController _fechaIngresoController = TextEditingController();
   final TextEditingController _dxiController = TextEditingController();
@@ -33,12 +31,14 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _fechaPrimeraRevisionController = TextEditingController();
   final TextEditingController _fechaUltimaRevisionController = TextEditingController();
   final TextEditingController _fechaPuerperioController = TextEditingController();
-  //final TextEditingController _diagnosticoEmbarazadaController = TextEditingController();
+
   final TextEditingController _riesgoController = TextEditingController();
   final TextEditingController _trasladoController = TextEditingController();
   final TextEditingController _apeoController = TextEditingController();
 
   final TextEditingController _diagnostico = TextEditingController();
+
+  final TextEditingController _claveExpediente = TextEditingController();
 
   late TabController _tabController;
 
@@ -145,6 +145,17 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
               (value) {
                 if (value!.isEmpty) {
                   return 'Por favor, ingresa los apellidos';
+                }
+                return null;
+              },readOnly: true,
+            ),
+            _buildTextField(
+              'Expediente',
+              _claveExpediente,
+              'Ingrese clave expediente',
+                  (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor, ingresa el expediente';
                 }
                 return null;
               },readOnly: true,
@@ -545,7 +556,6 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       derechoHabiendo: _derechoHabiendoController.text,
       afiliacion: _afiliacionController.text,
       tipoSanguineo: _tipoSanguineoController.text,
-      //diagnostico: _diagnosticoController.text,
 
       fechaCreacionExp: _fechaCreacionExpController.text,
       fechaIngreso: _fechaIngresoController.text,
@@ -556,12 +566,13 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       fechaPrimeraRevision: _fechaPrimeraRevisionController.text,
       fechaUltimaRevision: _fechaUltimaRevisionController.text,
       fechaPuerperio: _fechaPuerperioController.text,
-      //diagnosticoEmbarazada: _diagnosticoEmbarazadaController.text,
       riesgo: _riesgoController.text,
       traslado: _trasladoController.text,
       apeo: _apeoController.text,
 
       diagnostico: _diagnostico.text,
+
+      claveExpediente: _claveExpediente.text,
     );
 
     try {

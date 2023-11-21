@@ -10,7 +10,6 @@ class Patient {
   final  derechoHabiendo;
   final  afiliacion;
   final  tipoSanguineo;
-  //final  diagnostico;
 
   // Propiedades para la tabla "consultasingreso"
   final fechaCreacionExp;
@@ -23,7 +22,6 @@ class Patient {
   final fechaPrimeraRevision;
   final fechaUltimaRevision;
   final fechaPuerperio;
-  //final diagnosticoEmbarazada;
   final riesgo;
   final traslado;
   final apeo;
@@ -38,6 +36,9 @@ class Patient {
   final diagnostico;
   final fecha_registro;
 
+  // Propiedades para la tabla "Expediente"
+  final claveExpediente;
+
 
   Patient({
     this.idPaciente,
@@ -51,7 +52,6 @@ class Patient {
      this.derechoHabiendo,
      this.afiliacion,
      this.tipoSanguineo,
-     //this.diagnostico,
 
     // Propiedades
     this.fechaCreacionExp,
@@ -64,7 +64,6 @@ class Patient {
     this.fechaUltimaRevision,
     this.fechaPuerperio,
 
-    //this.diagnosticoEmbarazada,
     this.riesgo,
     this.traslado,
     this.apeo,
@@ -77,6 +76,7 @@ class Patient {
     this.diagnostico,
     this.fecha_registro,
 
+    this.claveExpediente,
 
   });
 
@@ -93,9 +93,7 @@ class Patient {
       derechoHabiendo: json['derecho_habiendo'],
       afiliacion: json['afiliacion'],
       tipoSanguineo: json['tipo_sanguineo'],
-      //diagnostico: json['diagnostico'],
 
-      // Mapea las propiedades adicionales
       fechaCreacionExp: json['fecha_creacion_exp'],
       fechaIngreso: json['fecha_ingreso'],
       dxi: json['dxi'],
@@ -105,7 +103,6 @@ class Patient {
       fechaPrimeraRevision: json['fecha_primera_revision'],
       fechaUltimaRevision: json['fecha_ultima_revision'],
       fechaPuerperio: json['fecha_puerperio'],
-      //diagnosticoEmbarazada: json['diagnostico_embarazada'],
       riesgo: json['riesgo'],
       traslado: json['traslado'],
       apeo: json['apeo'],
@@ -117,6 +114,8 @@ class Patient {
 
       diagnostico: json['diagnostico'],
       fecha_registro: json['fecha_registro'],
+
+      claveExpediente: json['clave_expediente'],
     );
   }
 }
