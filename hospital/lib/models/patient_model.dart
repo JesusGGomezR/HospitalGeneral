@@ -18,13 +18,13 @@ class Patient {
   final medicoIngreso;
 
   // Propiedades para la tabla "diagnosticosembarazadas"
-  final fechaUltimaRevisionExp;
+  final fechaUltimaRevisionExp;     ///Editar
   final fechaPrimeraRevision;
-  final fechaUltimaRevision;
-  final fechaPuerperio;
-  final riesgo;
-  final traslado;
-  final apeo;
+  final fechaUltimaRevision;        ///Editar
+  final fechaPuerperio;             ///Editar
+  final riesgo;                     ///Editar o historial?
+  final traslado;                   ///Editar o historial?
+  final apeo;                       ///Editar o historial?
 
   // Propiedades para la tabla "consultasegreso"
   final dxe;
@@ -38,6 +38,8 @@ class Patient {
 
   // Propiedades para la tabla "Expediente"
   final claveExpediente;
+
+
 
 
   Patient({
@@ -116,6 +118,7 @@ class Patient {
       fecha_registro: json['fecha_registro'],
 
       claveExpediente: json['clave_expediente'],
+
     );
   }
 }

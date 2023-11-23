@@ -26,12 +26,11 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _fechaIngresoController = TextEditingController();
   final TextEditingController _dxiController = TextEditingController();
   final TextEditingController _medicoIngresoController = TextEditingController();
-
+  ///Embarazadas
   final TextEditingController _fechaUltimaRevisionExpController = TextEditingController();
   final TextEditingController _fechaPrimeraRevisionController = TextEditingController();
   final TextEditingController _fechaUltimaRevisionController = TextEditingController();
   final TextEditingController _fechaPuerperioController = TextEditingController();
-
   final TextEditingController _riesgoController = TextEditingController();
   final TextEditingController _trasladoController = TextEditingController();
   final TextEditingController _apeoController = TextEditingController();
@@ -39,6 +38,12 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
   final TextEditingController _diagnostico = TextEditingController();
 
   final TextEditingController _claveExpediente = TextEditingController();
+
+  final TextEditingController _dxeController = TextEditingController();
+  final TextEditingController _fechaEgreso = TextEditingController();
+  final TextEditingController _medicoEgreso = TextEditingController();
+  final TextEditingController _observaciones = TextEditingController();
+
 
   late TabController _tabController;
 
@@ -573,6 +578,13 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
       diagnostico: _diagnostico.text,
 
       claveExpediente: _claveExpediente.text,
+
+      dxe: _dxeController.text,
+      fechaEgreso: _fechaEgreso.text,
+      medicoEgreso: _medicoEgreso.text,
+      observaciones: _observaciones.text,
+
+
     );
 
     try {

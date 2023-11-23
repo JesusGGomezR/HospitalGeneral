@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $derecho_habiendo = $data['derecho_habiendo'];
     $afiliacion = $data['afiliacion'];
     $tipo_sanguineo = $data['tipo_sanguineo'];
-    //$diagnostico = $data['diagnostico'];
+    $diagnostico = $data['diagnostico'];
 
     // Lógica para actualizar en "pacientes"
     $sql_pacientes = "UPDATE pacientes SET 
@@ -34,16 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE id_paciente = $id_paciente";
 
     if ($conexion->query($sql_pacientes) === true) {
-        // Lógica para actualizar en "historial_diagnosticos"
-        $diagnostico = $data['diagnostico'];
+        // Lógica para agregar o actualizar en "historial_diagnosticos"
+        $sql_historial_diagnosticos = "INSERT INTO historial_diagnosticos (id_paciente, diagnostico)
+                                       VALUES ($id_paciente, '$diagnostico')
+                                       ON DUPLICATE KEY UPDATE diagnostico = '$diagnostico'";
 
-        $sql_historial_diagnosticos = "UPDATE historial_diagnosticos SET 
-                diagnostico = '$diagnostico'
-                WHERE id_paciente = $id_paciente";
-
-        $conexion->query($sql_historial_diagnosticos);
-
-        echo json_encode(['success' => true]);
+        if ($conexion->query($sql_historial_diagnosticos) === true) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => $conexion->error]);
+        }
     } else {
         echo json_encode(['success' => false, 'error' => $conexion->error]);
     }
@@ -53,5 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $conexion->close();
 ?>
+
 
 

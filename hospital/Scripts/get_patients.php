@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-
+//ESTE ES PARA LA LISTA DE PACIENTES
 // Conexión a la base de datos (ajusta según tu configuración)
 $mysqli = new mysqli('localhost', 'root', '', 'hospital-tarimoro');
 
@@ -10,9 +10,14 @@ if ($mysqli->connect_error) {
 }
 
 // Utilizar consultas preparadas para evitar inyección SQL
-$query = "SELECT pacientes.*, historial_diagnosticos.diagnostico 
-          FROM pacientes 
-          LEFT JOIN historial_diagnosticos ON pacientes.id_paciente = historial_diagnosticos.id_paciente"; 
+/*
+Esto creará una columna llamada "diagnosticos" 
+que contendrá una cadena con todos los diagnósticos del paciente separados por comas.
+*/
+$query = "SELECT pacientes.*, GROUP_CONCAT(historial_diagnosticos.diagnostico) AS diagnosticos
+FROM pacientes 
+LEFT JOIN historial_diagnosticos ON pacientes.id_paciente = historial_diagnosticos.id_paciente
+GROUP BY pacientes.id_paciente"; 
 
 $result = $mysqli->query($query);
 

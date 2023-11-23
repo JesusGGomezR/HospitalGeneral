@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hospital/models/patient_model.dart';
 
+
 class PatientProvider extends ChangeNotifier {
   Patient? _currentPatient;
 
@@ -30,7 +31,11 @@ class PatientProvider extends ChangeNotifier {
           derechoHabiendo: patientData['derecho_habiendo'],
           afiliacion: patientData['afiliacion'],
           tipoSanguineo: patientData['tipo_sanguineo'],
-          //diagnostico: patientData['diagnostico'],
+
+          dxe: patientData['dxe'],
+          fechaEgreso: patientData['fecha_egreso'],
+          medicoEgreso: patientData['medico_egreso'],
+          observaciones: patientData['medico_egreso'],
         );
 
         notifyListeners();
@@ -59,13 +64,11 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': updatedPatient.derechoHabiendo,
           'afiliacion': updatedPatient.afiliacion,
           'tipo_sanguineo': updatedPatient.tipoSanguineo,
-          'diagnostico': updatedPatient.diagnostico,
         }),
       );
 
       final Map<String, dynamic> responseData = json.decode(response.body);
 
-      // Si la respuesta no es un mapa, devolver un mapa de error
       if (responseData is! Map<String, dynamic>) {
         return {'status': 'error', 'error': 'Error updating patient data'};
       }
@@ -75,10 +78,42 @@ class PatientProvider extends ChangeNotifier {
       return responseData;
     } catch (error) {
       print('Error: $error');
-      // Devuelve un mapa de error en caso de excepción
       return {'status': 'error', 'error': 'Error updating patient data'};
     }
   }
+
+
+  Future<Map<String, dynamic>> addDiagnostico(Patient addDiagnostico) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.82/add_diagnostico.php'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id_paciente': addDiagnostico.idPaciente,
+          'diagnostico': addDiagnostico.diagnostico,
+        }),
+      );
+
+      print('Raw response from server: ${response.body}');
+
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      if (responseData is! Map<String, dynamic>) {
+        print('Raw response from server: ${response.body}');
+        return {'status': 'error', 'error': 'Error adding diagnosis'};
+
+      }
+
+      print('Response from server: $responseData');
+
+      return responseData;
+    } catch (error) {
+      print('Error: $error');
+
+      return {'status': 'error', 'error': 'Error adding diagnosis'};
+    }
+  }
+
 
   Future<List<Patient>> getPatients() async {
     try {
@@ -126,7 +161,6 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': newPatient.derechoHabiendo,
           'afiliacion': newPatient.afiliacion,
           'tipo_sanguineo': newPatient.tipoSanguineo,
-          //'diagnostico': newPatient.diagnostico,
 
           // Agrega las nuevas propiedades para "consultasingreso" y "diagnosticosembarazadas"
           'fecha_creacion_exp': newPatient.fechaCreacionExp,
@@ -138,7 +172,7 @@ class PatientProvider extends ChangeNotifier {
           'fecha_primera_revision': newPatient.fechaPrimeraRevision,
           'fecha_ultima_revision': newPatient.fechaUltimaRevision,
           'fecha_puerperio': newPatient.fechaPuerperio,
-          //'diagnostico_embarazada': newPatient.diagnosticoEmbarazada,
+
           'riesgo': newPatient.riesgo,
           'traslado': newPatient.traslado,
           'apeo': newPatient.apeo,

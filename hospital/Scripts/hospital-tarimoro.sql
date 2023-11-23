@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2023 a las 06:50:41
+-- Tiempo de generación: 23-11-2023 a las 07:56:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -75,7 +75,59 @@ INSERT INTO `activity_log` (`id`, `message`, `timestamp`) VALUES
 (38, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-21 04:22:48'),
 (39, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-21 04:32:31'),
 (40, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-21 05:21:55'),
-(41, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-21 05:31:16');
+(41, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-21 05:31:16'),
+(42, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 02:25:56'),
+(43, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:42:15'),
+(44, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:44:34'),
+(45, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:51:00'),
+(46, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:53:55'),
+(47, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:55:17'),
+(48, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 05:57:00'),
+(49, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:05:05'),
+(50, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:06:41'),
+(51, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:11:45'),
+(52, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:19:09'),
+(53, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:20:11'),
+(54, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:26:15'),
+(55, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:29:43'),
+(56, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:32:22'),
+(57, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:33:17'),
+(58, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:33:50'),
+(59, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:36:27'),
+(60, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:36:52'),
+(61, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:37:47'),
+(62, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:43:21'),
+(63, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:44:02'),
+(64, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:47:08'),
+(65, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:47:37'),
+(66, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:49:09'),
+(67, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:50:53'),
+(68, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:54:24'),
+(69, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:57:00'),
+(70, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 06:57:28'),
+(71, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 07:04:05'),
+(72, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 07:04:40'),
+(73, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 07:06:56'),
+(74, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 07:07:59'),
+(75, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-22 07:16:15'),
+(76, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 00:49:12'),
+(77, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 00:49:53'),
+(78, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 00:55:47'),
+(79, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 01:33:27'),
+(80, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 01:54:41'),
+(81, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 01:56:01'),
+(82, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 01:56:39'),
+(83, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 02:23:49'),
+(84, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 02:43:03'),
+(85, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 02:58:09'),
+(86, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 03:01:37'),
+(87, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 03:02:16'),
+(88, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 03:59:04'),
+(89, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:08:39'),
+(90, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:35:13'),
+(91, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:00'),
+(92, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:49'),
+(93, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:41:37');
 
 -- --------------------------------------------------------
 
@@ -85,12 +137,19 @@ INSERT INTO `activity_log` (`id`, `message`, `timestamp`) VALUES
 
 CREATE TABLE `consultasegreso` (
   `id_consulta_egreso` int(11) NOT NULL,
-  `dxe` varchar(200) NOT NULL,
-  `fecha_egreso` date NOT NULL,
-  `medico_egreso` varchar(100) NOT NULL,
-  `observaciones` varchar(200) NOT NULL,
+  `dxe` varchar(200) DEFAULT NULL,
+  `fecha_egreso` date DEFAULT NULL,
+  `medico_egreso` varchar(100) DEFAULT NULL,
+  `observaciones` varchar(200) DEFAULT NULL,
   `id_paciente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `consultasegreso`
+--
+
+INSERT INTO `consultasegreso` (`id_consulta_egreso`, `dxe`, `fecha_egreso`, `medico_egreso`, `observaciones`, `id_paciente`) VALUES
+(1, 'Se fue sano a su casita', '2023-11-22', 'Dr. Octavio', 'Parece estar en orden todo', 1);
 
 -- --------------------------------------------------------
 
@@ -203,7 +262,7 @@ INSERT INTO `expedientes` (`id_expediente`, `clave_expediente`, `id_paciente`, `
 CREATE TABLE `historial_diagnosticos` (
   `id_historial_diagnostico` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
-  `diagnostico` text NOT NULL,
+  `diagnostico` varchar(255) NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -214,8 +273,10 @@ CREATE TABLE `historial_diagnosticos` (
 INSERT INTO `historial_diagnosticos` (`id_historial_diagnostico`, `id_paciente`, `diagnostico`, `fecha_registro`) VALUES
 (1, NULL, 'sef', '2023-11-20 03:28:29'),
 (2, NULL, '123', '2023-11-21 00:18:04'),
-(3, 59, 'awdaw123123', '2023-11-21 00:22:23'),
-(4, 1, 'awdawdwad', '2023-11-21 01:22:32');
+(3, 59, 'Esta todo bien', '2023-11-21 00:22:23'),
+(4, 1, 'awdawdwad', '2023-11-21 01:22:32'),
+(5, 1, 'Hola bb', '2023-11-23 02:24:18'),
+(14, 1, 'ffff', '2023-11-23 04:35:19');
 
 -- --------------------------------------------------------
 
@@ -394,13 +455,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `consultasegreso`
 --
 ALTER TABLE `consultasegreso`
-  MODIFY `id_consulta_egreso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_consulta_egreso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `consultasingreso`
@@ -424,7 +485,7 @@ ALTER TABLE `expedientes`
 -- AUTO_INCREMENT de la tabla `historial_diagnosticos`
 --
 ALTER TABLE `historial_diagnosticos`
-  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`

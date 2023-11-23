@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/models/expedient_model.dart';
-import 'package:hospital/provider/expedient_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/provider/patient_provider.dart';
 import '../models/patient_model.dart';
@@ -17,6 +16,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
   TextEditingController searchController = TextEditingController();
   List<Patient> allPatients = [];
   List<Patient> filteredPatients = [];
+  List<List<Expedient>> expedientsList = [];
 
   @override
   void initState() {
@@ -29,14 +29,15 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
     });
   }
 
+
   void loadPatients() async {
-    final patientProvider =
-        Provider.of<PatientProvider>(context, listen: false);
+    final patientProvider = Provider.of<PatientProvider>(context, listen: false);
     allPatients = await patientProvider.getPatients();
     setState(() {
       filteredPatients = allPatients;
     });
   }
+
 
   void filterPatients(String query) {
     final List<Patient> filteredList = allPatients
@@ -47,6 +48,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
       filteredPatients = filteredList;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,26 +93,7 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('      CURP: ${patient.curp ?? ''}'),
-                      FutureBuilder<List<Expedient>>(
-                        future: Provider.of<ExpedientProvider>(context)
-                            .getExpedientsForPatient(patient.idPaciente),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (snapshot.hasData) {
-                            List<Expedient> expedients = snapshot.data!;
-                            if (expedients.isNotEmpty) {
-                              return Text('                 Expediente: ${expedients[0].clave_expediente}');
-                            } else {
-                              return Text('                 Expediente: No disponible');
-                            }
-                          } else {
-                            return Text('                 Expediente: No disponible');
-                          }
-                        },
-                      ),
+                      Text('                 Expediente: ${patient.diagnostico ?? 'No disponible'}'),
                     ],
                   ),
                   trailing: IconButton(
@@ -120,12 +103,10 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              EditPatientDetailsScreen(patient: patient),
+                          builder: (context) => EditPatientDetailsScreen(patient: patient),
                         ),
                       );
                     },
-                    //child: Text('Consultar'),
                   ),
                 );
               },

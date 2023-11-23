@@ -13,7 +13,11 @@ if ($mysqli->connect_error) {
 }
 
 // Utilizar consultas preparadas para evitar inyección SQL
-$query = "SELECT * FROM pacientes WHERE id_paciente = ?";
+$query = "SELECT pacientes.*, consultasegreso.*, diagnosticosembarazadas.*
+            FROM pacientes
+            LEFT JOIN consultasegreso ON pacientes.id_paciente = consultasegreso.id_paciente
+            LEFT JOIN diagnosticosembarazadas ON pacientes.id_paciente = diagnosticosembarazadas.id_paciente
+            WHERE pacientes.id_paciente = ?";
 $stmt = $mysqli->prepare($query);
 
 if ($stmt) {
@@ -27,9 +31,9 @@ if ($stmt) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Obtener datos del paciente
-        $patient = $result->fetch_assoc();
-        echo json_encode(['status' => 'success', 'patient' => $patient]);
+        // Obtener datos del paciente y otras tablas
+        $data = $result->fetch_assoc();
+        echo json_encode(['status' => 'success', 'data' => $data]);
     } else {
         // No se encontró al paciente
         echo json_encode(['status' => 'error', 'message' => 'Paciente no encontrado']);
@@ -45,3 +49,4 @@ if ($stmt) {
 // Cerrar la conexión a la base de datos
 $mysqli->close();
 ?>
+

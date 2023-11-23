@@ -72,6 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conexion->query($sql_expedientes);
         //IMPORTANTE ME QUEDE EN ELIMINAR LAS TABLAS DE TIPO Y FILE
+
+        //--------------------------------------------------------------------------------
+        // Lógica para insertar id y Null "consultaegreso"
+
+        $sql_consultasegreso = "INSERT INTO consultasegreso (id_consulta_egreso, id_paciente) 
+                   VALUES (NULL, '$id_paciente')";
+
+        $conexion->query($sql_consultasegreso);
+
+         //--------------------------------------------------------------------------------
         echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'error' => $conexion->error]);
