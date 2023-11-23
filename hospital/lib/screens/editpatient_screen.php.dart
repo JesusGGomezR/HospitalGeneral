@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital/models/expedient_model.dart';
+import 'package:hospital/provider/expedient_provider.dart';
+import 'package:hospital/screens/expedient_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/models/patient_model.dart';
 import 'package:hospital/provider/patient_provider.dart';
@@ -37,6 +42,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
   late TextEditingController _medicoEgresoController;
   late TextEditingController _observacionesController;
 
+  late TextEditingController _expedienteController;
 
   late TabController _tabController;
   //late TextEditingController _diagnosticoController;
@@ -50,24 +56,49 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
     // Inicializa los controladores con los datos actuales del paciente
     _curpController = TextEditingController(text: widget.patient.curp);
     _nombreController = TextEditingController(text: widget.patient.nombre);
-    _apellidosController = TextEditingController(text: widget.patient.apellidos);
+    _apellidosController =
+        TextEditingController(text: widget.patient.apellidos);
     _telefonoController = TextEditingController(text: widget.patient.telefono);
-    _domicilioController = TextEditingController(text: widget.patient.domicilio);
+    _domicilioController =
+        TextEditingController(text: widget.patient.domicilio);
     _generoController = TextEditingController(text: widget.patient.genero);
     _estatusController = TextEditingController(text: widget.patient.estatus);
-    _derechoHabiendoController = TextEditingController(text: widget.patient.derechoHabiendo);
-    _afiliacionController = TextEditingController(text: widget.patient.afiliacion);
-    _tipoSanguineoController = TextEditingController(text: widget.patient.tipoSanguineo);
-    _diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
+    _derechoHabiendoController =
+        TextEditingController(text: widget.patient.derechoHabiendo);
+    _afiliacionController =
+        TextEditingController(text: widget.patient.afiliacion);
+    _tipoSanguineoController =
+        TextEditingController(text: widget.patient.tipoSanguineo);
+    _diagnosticoController =
+        TextEditingController(text: widget.patient.diagnostico);
 
     _dxeController = TextEditingController(text: widget.patient.dxe);
-    _fechaEgresoController = TextEditingController(text: widget.patient.fechaEgreso);
-    _medicoEgresoController = TextEditingController(text: widget.patient.medicoEgreso);
-    _observacionesController = TextEditingController(text: widget.patient.observaciones);
+    _fechaEgresoController =
+        TextEditingController(text: widget.patient.fechaEgreso);
+    _medicoEgresoController =
+        TextEditingController(text: widget.patient.medicoEgreso);
+    _observacionesController =
+        TextEditingController(text: widget.patient.observaciones);
+
+    _expedienteController = TextEditingController();
+
+    Provider.of<ExpedientProvider>(context, listen: false)
+        .getExpedientsForPatient(widget.patient.idPaciente)
+        .then((expedients) {
+      if (expedients.isNotEmpty) {
+        // Actualizar el controlador con la clave del primer expediente
+        setState(() {
+          _expedienteController.text = expedients[0].clave_expediente;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+/////////////////////////////////////
+
+///////////////////////////////////
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 27, 89, 121),
@@ -81,7 +112,6 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
           ],
         ),
       ),
-
       body: DefaultTabController(
         length: 3,
         child: TabBarView(
@@ -90,7 +120,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
             //TODO-----------------------------PESTAÑA 1------------------------
             SingleChildScrollView(
               child: Form(
-                key: _formKeyTab1 ,
+                key: _formKeyTab1,
                 child: formEditPatient(context),
               ),
             ),
@@ -103,7 +133,6 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
             ),
             //TODO-----------------------------PESTAÑA 3------------------------
             Container(child: Text('Pestaña 3')),
-
           ],
         ),
       ),
@@ -134,6 +163,66 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: () async {
+                  String? expedienteText = _expedienteController.text;
+                  if (expedienteText != null && expedienteText.isNotEmpty) {
+                    ExpedientProvider expedientProvider =
+                        Provider.of<ExpedientProvider>(context, listen: false);
+                    Expedient? expedient = await expedientProvider
+                        .loadExpedientByClave(expedienteText);
+                    if (expedient != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ExpedientScreen(expedient: expedient),
+                        ),
+                      );
+                    } else {
+                      // Manejar el caso en el que no se pudo cargar el expediente
+                    }
+                  } else {
+                    // Manejar el caso en el que el texto del expediente es nulo o vacío
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14.0),
+                    color: Color.fromARGB(255, 209, 209, 211),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Expediente',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      TextFormField(
+                        style: TextStyle(color: Colors.black),
+                        controller: _expedienteController,
+                        decoration: InputDecoration(
+                          hintText: 'Expediente',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blueGrey),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               _buildTextField(
                 'CURP',
                 _curpController,
@@ -302,7 +391,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'DXE',
                 _dxeController,
                 'Ingrese el DXE',
-                    (value) {
+                (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa el DXE';
                   }
@@ -318,7 +407,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'Medico de egreso',
                 _medicoEgresoController,
                 'Ingrese el medico de egreso',
-                    (value) {
+                (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa el medico de egreso';
                   }
@@ -329,7 +418,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'Observaciones',
                 _observacionesController,
                 'Ingrese observaciones',
-                    (value) {
+                (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa las observaciones';
                   }
@@ -346,7 +435,8 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
 
   //TODO---------------------------------PESTAÑA 3------------------------------
 
-  Widget _buildDateTimeField(String label, TextEditingController controller, String hintText) {
+  Widget _buildDateTimeField(
+      String label, TextEditingController controller, String hintText) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
@@ -388,11 +478,13 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
               if (date != null) {
                 TimeOfDay? time = await showTimePicker(
                   context: context,
-                  initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                  initialTime:
+                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                 );
                 if (time != null) {
                   // Combina la fecha y la hora seleccionadas
-                  date = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+                  date = DateTime(
+                      date.year, date.month, date.day, time.hour, time.minute);
                 }
               }
               return date;
@@ -403,7 +495,8 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
     );
   }
 
-  Widget _buildDate(String label, TextEditingController controller, String hintText) {
+  Widget _buildDate(
+      String label, TextEditingController controller, String hintText) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),

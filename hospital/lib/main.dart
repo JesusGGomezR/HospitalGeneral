@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/models/expedient_model.dart';
 import 'package:hospital/provider/activity_log.dart';
 import 'package:hospital/provider/expedient_provider.dart';
 import 'package:hospital/provider/user_provider.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => PatientProvider()),
         ChangeNotifierProvider(create: (_) => ExpedientProvider()),
-        ChangeNotifierProvider(create: (_) => ActivityLogProvider())
+        ChangeNotifierProvider(create: (_) => ActivityLogProvider()),
         // Otros providers pueden ir aquí
       ],
       child: MaterialApp(

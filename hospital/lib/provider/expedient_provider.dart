@@ -147,7 +147,7 @@ class ExpedientProvider extends ChangeNotifier {
 
         if (expedientDataList is List) {
           final List<Expedient> expedients =
-          expedientDataList.map((expedientData) {
+              expedientDataList.map((expedientData) {
             return Expedient.fromJson(expedientData);
           }).toList();
 
@@ -165,5 +165,53 @@ class ExpedientProvider extends ChangeNotifier {
       return [];
     }
   }
-}
 
+  Future<Expedient?> loadExpedientByClave(String expedienteText) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.1.82/load_expedient.php?claveExpediente=$expedienteText'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> expedientData = json.decode(response.body);
+        return Expedient(
+          id_expediente: expedientData['id_expediente'],
+          clave_expediente: expedientData['clave_expediente'],
+          id_paciente: expedientData['id_paciente'],
+          tipo: expedientData['tipo'],
+          file: expedientData['file'],
+        );
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        return null;
+      }
+    } catch (error) {
+      print('Error: $error');
+      return null;
+    }
+  }
+
+  Future<Expedient?> loadExpedientByFile(String file) async {
+    try {
+      final response = await http
+          .get(Uri.parse('http://192.168.1.82/load_expedient.php?file=$file'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> expedientData = json.decode(response.body);
+        return Expedient(
+          id_expediente: expedientData['id_expediente'],
+          clave_expediente: expedientData['clave_expediente'],
+          id_paciente: expedientData['id_paciente'],
+          tipo: expedientData['tipo'],
+          file: expedientData['file'],
+        );
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        return null;
+      }
+    } catch (error) {
+      print('Error: $error');
+      return null;
+    }
+  }
+}

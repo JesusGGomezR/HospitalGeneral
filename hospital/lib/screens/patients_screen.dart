@@ -6,7 +6,6 @@ import '../models/patient_model.dart';
 import 'editpatient_screen.php.dart';
 import 'package:hospital/screens/addpatient_screen.dart';
 
-
 class EditPatientScreen extends StatefulWidget {
   @override
   _EditPatientScreenState createState() => _EditPatientScreenState();
@@ -29,15 +28,14 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
     });
   }
 
-
   void loadPatients() async {
-    final patientProvider = Provider.of<PatientProvider>(context, listen: false);
+    final patientProvider =
+        Provider.of<PatientProvider>(context, listen: false);
     allPatients = await patientProvider.getPatients();
     setState(() {
       filteredPatients = allPatients;
     });
   }
-
 
   void filterPatients(String query) {
     final List<Patient> filteredList = allPatients
@@ -48,7 +46,6 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
       filteredPatients = filteredList;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +90,8 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('      CURP: ${patient.curp ?? ''}'),
-                      Text('                 Expediente: ${patient.diagnostico ?? 'No disponible'}'),
+                      Text(
+                          '                 Expediente: ${patient.claveExpediente ?? 'No disponible'}'),
                     ],
                   ),
                   trailing: IconButton(
@@ -103,7 +101,8 @@ class _EditPatientScreenState extends State<EditPatientScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditPatientDetailsScreen(patient: patient),
+                          builder: (context) =>
+                              EditPatientDetailsScreen(patient: patient),
                         ),
                       );
                     },
