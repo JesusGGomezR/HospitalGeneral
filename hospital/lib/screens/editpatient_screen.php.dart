@@ -170,18 +170,25 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
             children: [
               GestureDetector(
                 onTap: () async {
-                  String? expedienteText = _expedienteController.text;
-                  if (expedienteText != null && expedienteText.isNotEmpty) {
-                    ExpedientProvider expedientProvider =
-                        Provider.of<ExpedientProvider>(context, listen: false);
-                    Expedient? expedient = await expedientProvider
-                        .loadExpedientByClave(expedienteText);
+                  String expedient = _expedienteController.text;
+                  if (expedient != null) {
+                    Provider.of<ExpedientProvider>(context, listen: false)
+                        .getExpedientsForPatient(widget.patient.idPaciente)
+                        .then((expedients) {
+                      if (expedients.isNotEmpty) {
+                        // Actualizar el controlador con la clave del primer expediente
+                        setState(() {
+                          _expedienteController.text =
+                              expedients[0].clave_expediente;
+                        });
+                      }
+                    });
                     if (expedient != null) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ExpedientScreen(expedient: expedient),
+                              ExpedientScreen(expedientS: expedient),
                         ),
                       );
                     } else {
