@@ -69,8 +69,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
         TextEditingController(text: widget.patient.afiliacion);
     _tipoSanguineoController =
         TextEditingController(text: widget.patient.tipoSanguineo);
-    _diagnosticoController =
-        TextEditingController(text: widget.patient.diagnostico);
+    _diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
 
     _dxeController = TextEditingController(text: widget.patient.dxe);
     _fechaEgresoController =
@@ -81,6 +80,12 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
         TextEditingController(text: widget.patient.observaciones);
 
     _expedienteController = TextEditingController();
+
+    Provider.of<PatientProvider>(context, listen: false)
+        .loadConsultaEgresoData(widget.patient.idPaciente);
+
+    Provider.of<PatientProvider>(context, listen: false)
+        .loadPatientData();
 
     Provider.of<ExpedientProvider>(context, listen: false)
         .getExpedientsForPatient(widget.patient.idPaciente)
@@ -604,7 +609,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       derechoHabiendo: _derechoHabiendoController.text,
       afiliacion: _afiliacionController.text,
       tipoSanguineo: _tipoSanguineoController.text,
-      diagnostico: _diagnosticoController.text,
+      diagnostico: _diagnosticoController.text,     ///Bueno
     );
 
     try {

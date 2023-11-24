@@ -11,8 +11,8 @@ if ($mysqli->connect_error) {
 // Obtener el ID del paciente desde la solicitud GET
 $idPaciente = $_GET['id_paciente'];
 
-// Consulta para obtener el historial de diagnósticos del paciente
-$query = "SELECT * FROM historial_diagnosticos WHERE id_paciente = $idPaciente";
+// Consulta para obtener el historial de diagnósticos del paciente, excluyendo los registros sin diagnóstico
+$query = "SELECT * FROM historial_diagnosticos WHERE id_paciente = $idPaciente AND diagnostico IS NOT NULL AND diagnostico <> ''";
 $result = $mysqli->query($query);
 
 if ($result) {
@@ -37,5 +37,6 @@ if ($result) {
 
 $mysqli->close();
 ?>
+
 
 

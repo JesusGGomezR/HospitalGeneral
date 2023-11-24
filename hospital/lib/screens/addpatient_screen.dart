@@ -246,6 +246,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                 return null;
               },readOnly: true,
             ),
+
             _buildTextField(
               'Diagnóstico',
               _diagnostico,                 //TODO---------Debe de estar en editar pacientes
@@ -257,6 +258,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> with TickerProvider
                 return null;
               },readOnly: true,
             ),
+
             SizedBox(height: 32.0),
           ],
         ),

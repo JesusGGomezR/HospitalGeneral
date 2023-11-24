@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2023 a las 07:56:16
+-- Tiempo de generación: 24-11-2023 a las 01:08:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -127,7 +127,11 @@ INSERT INTO `activity_log` (`id`, `message`, `timestamp`) VALUES
 (90, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:35:13'),
 (91, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:00'),
 (92, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:49'),
-(93, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:41:37');
+(93, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:41:37'),
+(94, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:17:13'),
+(95, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:20:00'),
+(96, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:58:44'),
+(97, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:05:20');
 
 -- --------------------------------------------------------
 
@@ -276,7 +280,13 @@ INSERT INTO `historial_diagnosticos` (`id_historial_diagnostico`, `id_paciente`,
 (3, 59, 'Esta todo bien', '2023-11-21 00:22:23'),
 (4, 1, 'awdawdwad', '2023-11-21 01:22:32'),
 (5, 1, 'Hola bb', '2023-11-23 02:24:18'),
-(14, 1, 'ffff', '2023-11-23 04:35:19');
+(14, 1, 'ffff', '2023-11-23 04:35:19'),
+(15, 1, '', '2023-11-23 23:20:19'),
+(16, 1, 'Prueba 2', '2023-11-23 23:20:19'),
+(17, 1, '', '2023-11-23 23:59:22'),
+(18, 1, 'Elefante', '2023-11-23 23:59:22'),
+(19, 1, '', '2023-11-24 00:05:38'),
+(20, 1, 'Mexico', '2023-11-24 00:05:38');
 
 -- --------------------------------------------------------
 
@@ -455,7 +465,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT de la tabla `consultasegreso`
@@ -485,7 +495,7 @@ ALTER TABLE `expedientes`
 -- AUTO_INCREMENT de la tabla `historial_diagnosticos`
 --
 ALTER TABLE `historial_diagnosticos`
-  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`

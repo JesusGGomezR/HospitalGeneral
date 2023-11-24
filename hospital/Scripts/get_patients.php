@@ -14,9 +14,10 @@ if ($mysqli->connect_error) {
 Esto creará una columna llamada "diagnosticos" 
 que contendrá una cadena con todos los diagnósticos del paciente separados por comas.
 */
-$query = "SELECT pacientes.*, GROUP_CONCAT(historial_diagnosticos.diagnostico) AS diagnosticos
+$query = "SELECT pacientes.*, GROUP_CONCAT(historial_diagnosticos.diagnostico) AS diagnosticos, expedientes.clave_expediente
 FROM pacientes 
 LEFT JOIN historial_diagnosticos ON pacientes.id_paciente = historial_diagnosticos.id_paciente
+LEFT JOIN expedientes ON pacientes.id_paciente = expedientes.id_paciente
 GROUP BY pacientes.id_paciente"; 
 
 $result = $mysqli->query($query);
