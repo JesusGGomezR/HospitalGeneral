@@ -170,7 +170,8 @@ class ExpedientProvider extends ChangeNotifier {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.1.82/load_expedient.php?claveExpediente=$expedienteText'),
+          'http://192.168.1.82/load_expedient.php?claveExpediente=$expedienteText',
+        ),
       );
 
       if (response.statusCode == 200) {
@@ -184,11 +185,13 @@ class ExpedientProvider extends ChangeNotifier {
         );
       } else {
         print('Error en la solicitud HTTP: ${response.statusCode}');
-        return null;
+        // Lanza una excepción para que el código que llama pueda manejarla
+        throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
       }
     } catch (error) {
       print('Error: $error');
-      return null;
+      // Lanza la excepción nuevamente para que el código que llama pueda manejarla
+      throw error;
     }
   }
 
