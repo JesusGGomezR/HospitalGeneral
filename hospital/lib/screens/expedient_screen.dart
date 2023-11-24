@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hospital/models/expedient_model.dart'; // Asegúrate de ide importar tu proveedor de expedientes
+import 'package:hospital/models/expedient_model.dart';
+import 'package:hospital/provider/expedient_provider.dart'; // Asegúrate de ide importar tu proveedor de expedientes
 
 class ExpedientScreen extends StatelessWidget {
-  final Expedient expedient;
+  final String expedientS;
 
   // Constructor que recibe un expediente
-  const ExpedientScreen({Key? key, required this.expedient}) : super(key: key);
+  const ExpedientScreen({Key? key, required this.expedientS}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Expedient expedient;
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalles del Expediente'),
@@ -26,7 +28,7 @@ class ExpedientScreen extends StatelessWidget {
               ),
             ),
             Text(
-              expedient.clave_expediente,
+              expedientS,
               style: TextStyle(
                 fontSize: 16.0,
               ),
@@ -40,7 +42,8 @@ class ExpedientScreen extends StatelessWidget {
               ),
             ),
             Text(
-              expedient.tipo,
+              'CCCC',
+              //expedient.tipo.toString(),
               style: TextStyle(
                 fontSize: 16.0,
               ),
