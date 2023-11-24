@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+//ESTE ES PARA OBTENER LOS DATOS DEL PACIENTE EN EDITAR
 
 // Obtener datos del formulario
 $id = isset($_GET['id']) ? $_GET['id'] : null;

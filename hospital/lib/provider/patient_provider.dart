@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hospital/models/patient_model.dart';
 
-
 class PatientProvider extends ChangeNotifier {
   Patient? _currentPatient;
 
   Patient? get currentPatient => _currentPatient;
-
-  static const String apiUrl =
-      'http://192.168.1.82/update_patient.php'; // Asegúrate de actualizar la URL
 
   Future<void> loadPatientData() async {
     try {
@@ -31,11 +27,10 @@ class PatientProvider extends ChangeNotifier {
           derechoHabiendo: patientData['derecho_habiendo'],
           afiliacion: patientData['afiliacion'],
           tipoSanguineo: patientData['tipo_sanguineo'],
-
           dxe: patientData['dxe'],
           fechaEgreso: patientData['fecha_egreso'],
           medicoEgreso: patientData['medico_egreso'],
-          observaciones: patientData['medico_egreso'],
+          observaciones: patientData['medico_egreso'], 
         );
 
         notifyListeners();
@@ -44,6 +39,29 @@ class PatientProvider extends ChangeNotifier {
       }
     } catch (error) {
       print('Error: $error');
+    }
+  }
+
+//TODO-----------------------------------OBTIENE EGRESO-------------------------
+  Future<void> loadConsultaEgresoData(idPaciente) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://192.168.1.82/load_consultaegreso.php?id_paciente=$idPaciente'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> consultaEgresoData = json.decode(response.body);
+
+        // Si necesitas almacenar estos datos en una propiedad, hazlo aquí
+        // _consultaEgresoData = consultaEgresoData;
+
+        notifyListeners();
+      } else {
+        throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Error al cargar los datos de consulta de egreso');
     }
   }
 
@@ -82,14 +100,14 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-
   Future<Map<String, dynamic>> addDiagnostico(Patient addDiagnostico) async {
     try {
       final response = await http.post(
         Uri.parse('http://192.168.1.82/add_diagnostico.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'id_paciente': addDiagnostico.idPaciente,
+          'id_paciente': addDiagnostico
+              .idPaciente, // Aquí debería estar el id_paciente correcto
           'diagnostico': addDiagnostico.diagnostico,
         }),
       );
@@ -101,7 +119,6 @@ class PatientProvider extends ChangeNotifier {
       if (responseData is! Map<String, dynamic>) {
         print('Raw response from server: ${response.body}');
         return {'status': 'error', 'error': 'Error adding diagnosis'};
-
       }
 
       print('Response from server: $responseData');
@@ -113,7 +130,6 @@ class PatientProvider extends ChangeNotifier {
       return {'status': 'error', 'error': 'Error adding diagnosis'};
     }
   }
-
 
   Future<List<Patient>> getPatients() async {
     try {
