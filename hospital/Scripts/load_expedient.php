@@ -9,9 +9,7 @@ $mysqli = new mysqli('localhost', 'root', '', 'hospital-tarimoro');
 
 // Manejar errores de conexión
 if ($mysqli->connect_error) {
-    http_response_code(500);  // Internal Server Error
-    echo json_encode(['status' => 'error', 'message' => 'Error de conexión a la base de datos']);
-    die();
+    die('Error de conexión: ' . $mysqli->connect_error);
 }
 
 // Utilizar consultas preparadas para evitar inyección SQL
@@ -29,20 +27,18 @@ if ($stmt) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Obtener datos del expediente
+        // Obtener datos del paciente
         $expedient = $result->fetch_assoc();
         echo json_encode(['status' => 'success', 'expedient' => $expedient]);
     } else {
-        // No se encontró el expediente
-        http_response_code(404);  // Not Found
-        echo json_encode(['status' => 'error', 'message' => 'Expediente no encontrado']);
+        // No se encontró al paciente
+        echo json_encode(['status' => 'error', 'message' => 'expediente no encontrado']);
     }
 
-    // Cerrar la preparación de la consulta
+    // Cerrar la conexión a la base de datos
     $stmt->close();
 } else {
     // Manejar el caso en que la preparación de la consulta falle
-    http_response_code(500);  // Internal Server Error
     echo json_encode(['status' => 'error', 'message' => 'Error en la preparación de la consulta']);
 }
 

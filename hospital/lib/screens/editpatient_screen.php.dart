@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:hospital/models/patient_model.dart';
 import 'package:hospital/provider/patient_provider.dart';
 import '../models/egreso_model.dart';
+import '../models/embarazada_model.dart';
 import '../provider/diagnostico_provider.dart';
 import 'diagnostico_screen.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +21,12 @@ class EditPatientDetailsScreen extends StatefulWidget {
   @override
   _EditPatientDetailsScreenState createState() =>
       _EditPatientDetailsScreenState();
-}
+
+  void _updatePatientDetails(BuildContext context) async {
+    final patientProvider = Provider.of<PatientProvider>(
+        context, listen: false);
+  }
+  }
 
 class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
     with SingleTickerProviderStateMixin {
@@ -41,12 +47,20 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
   late TextEditingController _medicoEgresoController;
   late TextEditingController _observacionesController;
 
+  late TextEditingController _fechaUltimaRevisionExpController;
+  late TextEditingController _fechaUltimaRevisionController;
+  late TextEditingController _fechaPuerperioController;
+  late TextEditingController _riesgoController;
+  late TextEditingController _trasladoController;
+  late TextEditingController _apeoController;
+
   late TextEditingController _expedienteController;
 
   late TabController _tabController;
   //late TextEditingController _diagnosticoController;
   final _formKeyTab1 = GlobalKey<FormState>();
   final _formKeyTab2 = GlobalKey<FormState>();
+  final _formKeyTab3 = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -55,28 +69,26 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
     // Inicializa los controladores con los datos actuales del paciente
     _curpController = TextEditingController(text: widget.patient.curp);
     _nombreController = TextEditingController(text: widget.patient.nombre);
-    _apellidosController =
-        TextEditingController(text: widget.patient.apellidos);
+    _apellidosController = TextEditingController(text: widget.patient.apellidos);
     _telefonoController = TextEditingController(text: widget.patient.telefono);
-    _domicilioController =
-        TextEditingController(text: widget.patient.domicilio);
+    _domicilioController = TextEditingController(text: widget.patient.domicilio);
     _generoController = TextEditingController(text: widget.patient.genero);
     _estatusController = TextEditingController(text: widget.patient.estatus);
-    _derechoHabiendoController =
-        TextEditingController(text: widget.patient.derechoHabiendo);
-    _afiliacionController =
-        TextEditingController(text: widget.patient.afiliacion);
-    _tipoSanguineoController =
-        TextEditingController(text: widget.patient.tipoSanguineo);
+    _derechoHabiendoController = TextEditingController(text: widget.patient.derechoHabiendo);
+    _afiliacionController = TextEditingController(text: widget.patient.afiliacion);
+    _tipoSanguineoController = TextEditingController(text: widget.patient.tipoSanguineo);
     _diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
-
     _dxeController = TextEditingController(text: widget.patient.dxe);
-    _fechaEgresoController =
-        TextEditingController(text: widget.patient.fechaEgreso);
-    _medicoEgresoController =
-        TextEditingController(text: widget.patient.medicoEgreso);
-    _observacionesController =
-        TextEditingController(text: widget.patient.observaciones);
+    _fechaEgresoController = TextEditingController(text: widget.patient.fechaEgreso);
+    _medicoEgresoController = TextEditingController(text: widget.patient.medicoEgreso);
+    _observacionesController = TextEditingController(text: widget.patient.observaciones);
+
+    _fechaUltimaRevisionExpController = TextEditingController(text: widget.patient.fechaUltimaRevisionExp);
+    _fechaUltimaRevisionController = TextEditingController(text: widget.patient.fechaUltimaRevision);
+    _fechaPuerperioController = TextEditingController(text: widget.patient.fechaPuerperio);
+    _riesgoController = TextEditingController(text: widget.patient.riesgo);
+    _trasladoController = TextEditingController(text: widget.patient.traslado);
+    _apeoController = TextEditingController(text: widget.patient.apeo);
 
     _expedienteController = TextEditingController();
 
@@ -97,6 +109,25 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       print('Error loading consulta de egreso data: $error');
     });
 
+    //TODO----------------------------EMBARAZADA-------------------------------
+    print('Loading consulta de Embarazada data...');
+    Provider.of<PatientProvider>(context, listen: false)
+        .loadConsultaEmbarazadaData(widget.patient.idPaciente)
+        .then((_) {
+      if (Provider.of<PatientProvider>(context, listen: false).consultaEmbarazadaData != null) {
+        ConsultaEmbarazadaData consultaEmbarazadaData = Provider.of<PatientProvider>(context, listen: false).consultaEmbarazadaData!;
+        // Usa los campos según sea necesario
+        _fechaUltimaRevisionExpController.text = consultaEmbarazadaData.fechaUltimaRevisionExp ?? '';
+        _fechaUltimaRevisionController.text = consultaEmbarazadaData.fechaUltimaRevision ?? '';
+        _fechaPuerperioController.text = consultaEmbarazadaData.fechaPuerperio ?? '';
+        _riesgoController.text = consultaEmbarazadaData.riesgo ?? '';
+        _trasladoController.text = consultaEmbarazadaData.traslado ?? '';
+        _apeoController.text = consultaEmbarazadaData.apeo ?? '';
+      }
+    }).catchError((error) {
+      print('Error loading consulta de Embarazada data: $error');
+    });
+
     //TODO----------------------------EXPEDIENTE-------------------------------
     Provider.of<ExpedientProvider>(context, listen: false)
         .getExpedientsForPatient(widget.patient.idPaciente)
@@ -109,6 +140,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +180,12 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
               ),
             ),
             //TODO-----------------------------PESTAÑA 3------------------------
-            Container(child: Text('Pestaña 3')),
+            SingleChildScrollView(
+              child: Form(
+                key: _formKeyTab3,
+                child: formEditEmbarazadas(context),
+              ),
+            ),
           ],
         ),
       ),
@@ -457,8 +494,72 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
     );
   }
 
-
   //TODO---------------------------------PESTAÑA 3------------------------------
+  Padding formEditEmbarazadas(BuildContext context) {
+    print('Consulta de egreso data: ${Provider.of<PatientProvider>(context).consultaEmbarazadaData}');
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDate(
+                'Ultima revisión expediente',
+                _fechaUltimaRevisionExpController,
+                'Formato: YYYY-MM-DD',
+              ),
+              _buildDateTimeField(
+                'Ultima revisión medica',
+                _fechaUltimaRevisionController,
+                'Formato: YYYY-MM-DD HH:MM:SS',
+              ),
+              _buildDateTimeField(
+                'Fecha puerperio',
+                _fechaUltimaRevisionController,
+                'Formato: YYYY-MM-DD HH:MM:SS',
+              ),
+              _buildTextField(
+                'Riesgo',
+                _riesgoController,
+                'Ingrese un posible riesgo',
+                    (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, ingresa el medico de egreso';
+                  }
+                  return null;
+                },
+              ),
+              _buildTextField(
+                'Traslado',
+                _trasladoController,
+                'Ingrese un posible traslado',
+                    (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, ingresa las observaciones';
+                  }
+                  return null;
+                },
+              ),
+              _buildTextField(
+                'Apeo',
+                _apeoController,
+                'Ingrese Apeo',
+                    (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, ingresa las observaciones';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 32.0),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 
   Widget _buildDateTimeField(
       String label, TextEditingController controller, String hintText) {
@@ -636,6 +737,23 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       final Map<String, dynamic> response =
           await patientProvider.updatePatientData(updatedPatient);
       print('Response from server: $response');
+
+      // Actualizar los datos de consultaegreso
+      await patientProvider.updateConsultaEgresoData(widget.patient.idPaciente, ConsultaEgresoData(
+        dxe: _dxeController.text,
+        fechaEgreso: _fechaEgresoController.text,
+        medicoEgreso: _medicoEgresoController.text,
+        observaciones: _observacionesController.text,
+      ));
+
+      await patientProvider.updateConsultaEmbarazadaData(widget.patient.idPaciente, ConsultaEmbarazadaData(
+        fechaUltimaRevisionExp: _fechaUltimaRevisionExpController.text,
+        fechaUltimaRevision: _fechaUltimaRevisionController.text,
+        fechaPuerperio: _fechaPuerperioController.text,
+        riesgo: _riesgoController.text,
+        traslado: _trasladoController.text,
+        apeo: _apeoController.text,
+      ));
 
       await patientProvider.addDiagnostico(updatedPatient);
       // Recargar la lista después de la actualización

@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hospital/models/patient_model.dart';
-
 import '../models/egreso_model.dart';
+import '../models/embarazada_model.dart';
+
 
 class PatientProvider extends ChangeNotifier {
   ConsultaEgresoData? _consultaEgresoData;
   ConsultaEgresoData? get consultaEgresoData => _consultaEgresoData;
+
+  ConsultaEmbarazadaData? _consultaEmbarazadaData;
+  ConsultaEmbarazadaData? get consultaEmbarazadaData => _consultaEmbarazadaData;
 
   Patient? _currentPatient;
 
@@ -68,7 +72,7 @@ class PatientProvider extends ChangeNotifier {
   Future<void> updateConsultaEgresoData(String idPaciente, ConsultaEgresoData updatedData) async {
     try {
       final response = await http.post(
-        Uri.parse('http://tu-servidor/actualizar_consultaegreso.php'), // ajusta la URL
+        Uri.parse('http://192.168.1.82/update_consultaegreso.php'), // ajusta la URL
         body: {
           'id_paciente': idPaciente,
           'dxe': updatedData.dxe,
@@ -87,6 +91,58 @@ class PatientProvider extends ChangeNotifier {
     } catch (error) {
       print('Error: $error');
       throw Exception('Error al actualizar los datos de consultaegreso');
+    }
+  }
+
+//TODO-------------------------------------------------------------------------
+
+  //TODO--------------------------------EMBARAZADA------------------------------
+
+  Future<void> loadConsultaEmbarazadaData(String idPaciente) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://192.168.1.82/load_diagnosticosembarazadas.php?id_paciente=$idPaciente'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> consultaEmbarazadaDataJson = json.decode(response.body);
+        _consultaEmbarazadaData = ConsultaEmbarazadaData.fromJson(consultaEmbarazadaDataJson);
+        print('Consulta de Embarazada data loaded successfully.');
+        notifyListeners();
+      } else {
+        throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Error al cargar los datos de consulta de Embarazada');
+    }
+  }
+
+  Future<void> updateConsultaEmbarazadaData(String idPaciente, ConsultaEmbarazadaData updatedData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.82/update_diagnosticosembarazadas.php'), // ajusta la URL
+        body: {
+          'id_paciente': idPaciente,
+          'fecha_ultima_revision_exp': updatedData.fechaUltimaRevisionExp,
+          'fecha_ultima_revision': updatedData.fechaUltimaRevision,
+          'fecha_puerperio': updatedData.fechaPuerperio,
+          'riesgo': updatedData.riesgo,
+          'traslado': updatedData.traslado,
+          'apeo': updatedData.apeo,
+
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Consulta de Embarazada data updated successfully.');
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        throw Exception('Error al actualizar los datos de diagnosticosembarazadas');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Error al actualizar los datos de diagnosticosembarazadas');
     }
   }
 

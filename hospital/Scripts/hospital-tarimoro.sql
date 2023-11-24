@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2023 a las 04:47:05
+-- Tiempo de generación: 23-11-2023 a las 07:56:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -127,21 +127,7 @@ INSERT INTO `activity_log` (`id`, `message`, `timestamp`) VALUES
 (90, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:35:13'),
 (91, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:00'),
 (92, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:39:49'),
-(93, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:41:37'),
-(94, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:17:13'),
-(95, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:20:00'),
-(96, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 23:58:44'),
-(97, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:05:20'),
-(98, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:19:50'),
-(99, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:22:47'),
-(100, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:28:22'),
-(101, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:33:54'),
-(102, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 00:39:35'),
-(103, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 01:14:49'),
-(104, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 01:21:52'),
-(105, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 02:27:29'),
-(106, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 02:35:14'),
-(107, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-24 02:40:06');
+(93, 'Inicio de sesión exitoso para el usuario MENO000914HGTNTRA1', '2023-11-23 04:41:37');
 
 -- --------------------------------------------------------
 
@@ -276,7 +262,7 @@ INSERT INTO `expedientes` (`id_expediente`, `clave_expediente`, `id_paciente`, `
 CREATE TABLE `historial_diagnosticos` (
   `id_historial_diagnostico` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
-  `diagnostico` text NOT NULL,
+  `diagnostico` varchar(255) NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -290,31 +276,7 @@ INSERT INTO `historial_diagnosticos` (`id_historial_diagnostico`, `id_paciente`,
 (3, 59, 'Esta todo bien', '2023-11-21 00:22:23'),
 (4, 1, 'awdawdwad', '2023-11-21 01:22:32'),
 (5, 1, 'Hola bb', '2023-11-23 02:24:18'),
-(14, 1, 'ffff', '2023-11-23 04:35:19'),
-(15, 1, '', '2023-11-23 23:20:19'),
-(16, 1, 'Prueba 2', '2023-11-23 23:20:19'),
-(17, 1, '', '2023-11-23 23:59:22'),
-(18, 1, 'Elefante', '2023-11-23 23:59:22'),
-(19, 1, '', '2023-11-24 00:05:38'),
-(20, 1, 'Mexico', '2023-11-24 00:05:38'),
-(21, 1, '', '2023-11-24 00:20:09'),
-(23, 1, '', '2023-11-24 00:23:00'),
-(25, 1, '', '2023-11-24 00:30:08'),
-(26, 1, 'esta', '2023-11-24 00:30:08'),
-(27, 1, '', '2023-11-24 00:30:22'),
-(28, 1, 'pero a que costo', '2023-11-24 00:30:22'),
-(29, 1, '', '2023-11-24 00:34:08'),
-(30, 1, '', '2023-11-24 00:34:08'),
-(31, 1, '', '2023-11-24 00:39:49'),
-(32, 1, 'esta vez?', '2023-11-24 00:39:49'),
-(33, 1, '', '2023-11-24 00:40:02'),
-(34, 1, 'Va de nuevo', '2023-11-24 00:40:02'),
-(35, 1, '', '2023-11-24 00:49:00'),
-(36, 1, 'Ultima prueba de diagnostico ', '2023-11-24 00:49:00'),
-(37, 1, '', '2023-11-24 03:28:29'),
-(38, 1, 'Nose algo', '2023-11-24 03:28:29'),
-(39, 1, '', '2023-11-24 03:29:00'),
-(40, 1, 'Algo mas', '2023-11-24 03:29:00');
+(14, 1, 'ffff', '2023-11-23 04:35:19');
 
 -- --------------------------------------------------------
 
@@ -341,7 +303,7 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`id_paciente`, `curp`, `nombre`, `apellidos`, `telefono`, `domicilio`, `genero`, `estatus`, `derecho_habiendo`, `afiliacion`, `tipo_sanguineo`) VALUES
-(1, 'MENO000914HGTNTRA1', 'Orlando', 'Mendoza Nieto', '4661110909', 'Durazno', 'Masculino', 'Activo', 'Ninguno', 'Ninguno', 'A+++'),
+(1, 'MENO000914HGTNTRA1', 'Orlando', 'Mendoza Nieto', '4661110909', 'Durazno', 'Masculino', 'Activo', 'Ninguno', 'Ninguno', 'A+'),
 (22, 'LOPE010622HGTNTRA3', 'Elena', 'Lopez', '5557891234', 'Calle Flores', 'Femenino', 'Inactivo', 'Alguno', 'Seguro Popular', 'B-'),
 (23, 'GARC890531HGTNTRA2', 'Juan', 'Garcia', '4771234567', 'Av. Principal', 'Masculino', 'Activo', 'Ninguno', 'Particular', 'O+'),
 (24, 'HERN751214HGTNTRA4', 'Maria', 'Hernandez', '8449876543', 'Col. Nueva', 'Femenino', 'Inactivo', 'Alguno', 'IMSS', 'AB+'),
@@ -493,7 +455,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `consultasegreso`
@@ -523,7 +485,7 @@ ALTER TABLE `expedientes`
 -- AUTO_INCREMENT de la tabla `historial_diagnosticos`
 --
 ALTER TABLE `historial_diagnosticos`
-  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_historial_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`

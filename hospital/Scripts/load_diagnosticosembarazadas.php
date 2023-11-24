@@ -1,5 +1,5 @@
 <?php
-// load_consultaegreso.php
+// load_diagnosticosembarazadas.php
 
 header('Content-Type: application/json');
 
@@ -15,14 +15,15 @@ if (isset($_GET['id_paciente'])) {
     // Obtén el ID del paciente desde la solicitud GET
     $idPaciente = $_GET['id_paciente'];
 
-    // Consulta para obtener los datos de consultaegreso del paciente
-    $query = "SELECT * FROM consultasegreso 
+    // Consulta para obtener los datos de diagnosticosembarazadas del paciente
+    $query = "SELECT fecha_ultima_revision_exp, fecha_ultima_revision, fecha_puerperio, riesgo, traslado, apeo 
+              FROM diagnosticosembarazadas 
               WHERE id_paciente = $idPaciente";
     $result = $mysqli->query($query);
 
     if ($result) {
-        $consultaEgresoData = $result->fetch_assoc();
-        echo json_encode($consultaEgresoData);
+        $consultaEmbarazadaData = $result->fetch_assoc();
+        echo json_encode($consultaEmbarazadaData);
     } else {
         // Manejo de errores
         echo json_encode(array('error' => 'Error al obtener los datos de consultaegreso'));
@@ -34,5 +35,3 @@ if (isset($_GET['id_paciente'])) {
 
 $mysqli->close();
 ?>
-
-
