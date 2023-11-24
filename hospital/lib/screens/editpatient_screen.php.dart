@@ -1,13 +1,12 @@
 import 'dart:ui';
-
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:hospital/models/expedient_model.dart';
 import 'package:hospital/provider/expedient_provider.dart';
 import 'package:hospital/screens/expedient_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hospital/models/patient_model.dart';
 import 'package:hospital/provider/patient_provider.dart';
+import '../models/egreso_model.dart';
 import '../provider/diagnostico_provider.dart';
 import 'diagnostico_screen.dart';
 import 'package:intl/intl.dart';
@@ -81,12 +80,24 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
 
     _expedienteController = TextEditingController();
 
+    //TODO----------------------------EGRESO-------------------------------
+    print('Loading consulta de egreso data...');
     Provider.of<PatientProvider>(context, listen: false)
-        .loadConsultaEgresoData(widget.patient.idPaciente);
+        .loadConsultaEgresoData(widget.patient.idPaciente)
+        .then((_) {
+      if (Provider.of<PatientProvider>(context, listen: false).consultaEgresoData != null) {
+        ConsultaEgresoData consultaEgresoData = Provider.of<PatientProvider>(context, listen: false).consultaEgresoData!;
+        // Usa los campos según sea necesario
+        _dxeController.text = consultaEgresoData.dxe ?? '';
+        _fechaEgresoController.text = consultaEgresoData.fechaEgreso ?? '';
+        _medicoEgresoController.text = consultaEgresoData.medicoEgreso ?? '';
+        _observacionesController.text = consultaEgresoData.observaciones ?? '';
+      }
+    }).catchError((error) {
+      print('Error loading consulta de egreso data: $error');
+    });
 
-    Provider.of<PatientProvider>(context, listen: false)
-        .loadPatientData();
-
+    //TODO----------------------------EXPEDIENTE-------------------------------
     Provider.of<ExpedientProvider>(context, listen: false)
         .getExpedientsForPatient(widget.patient.idPaciente)
         .then((expedients) {
@@ -392,6 +403,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
 
   //TODO---------------------------------PESTAÑA 2------------------------------
   Padding formEditEgreso(BuildContext context) {
+    print('Consulta de egreso data: ${Provider.of<PatientProvider>(context).consultaEgresoData}');
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Center(
@@ -403,7 +415,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'DXE',
                 _dxeController,
                 'Ingrese el DXE',
-                (value) {
+                    (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa el DXE';
                   }
@@ -419,7 +431,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'Medico de egreso',
                 _medicoEgresoController,
                 'Ingrese el medico de egreso',
-                (value) {
+                    (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa el medico de egreso';
                   }
@@ -430,7 +442,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
                 'Observaciones',
                 _observacionesController,
                 'Ingrese observaciones',
-                (value) {
+                    (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingresa las observaciones';
                   }
@@ -444,6 +456,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
       ),
     );
   }
+
 
   //TODO---------------------------------PESTAÑA 3------------------------------
 

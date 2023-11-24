@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hospital/models/patient_model.dart';
 
+import '../models/egreso_model.dart';
+
 class PatientProvider extends ChangeNotifier {
+  ConsultaEgresoData? _consultaEgresoData;
+  ConsultaEgresoData? get consultaEgresoData => _consultaEgresoData;
+
   Patient? _currentPatient;
 
   Patient? get currentPatient => _currentPatient;
@@ -27,10 +32,6 @@ class PatientProvider extends ChangeNotifier {
           derechoHabiendo: patientData['derecho_habiendo'],
           afiliacion: patientData['afiliacion'],
           tipoSanguineo: patientData['tipo_sanguineo'],
-          dxe: patientData['dxe'],
-          fechaEgreso: patientData['fecha_egreso'],
-          medicoEgreso: patientData['medico_egreso'],
-          observaciones: patientData['medico_egreso'], 
         );
 
         notifyListeners();
@@ -42,19 +43,18 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
-//TODO-----------------------------------OBTIENE EGRESO-------------------------
-  Future<void> loadConsultaEgresoData(idPaciente) async {
+//TODO-----------------------------------EGRESO---------------------------------
+
+  Future<void> loadConsultaEgresoData(String idPaciente) async {
     try {
       final response = await http.get(
         Uri.parse('http://192.168.1.82/load_consultaegreso.php?id_paciente=$idPaciente'),
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> consultaEgresoData = json.decode(response.body);
-
-        // Si necesitas almacenar estos datos en una propiedad, hazlo aquí
-        // _consultaEgresoData = consultaEgresoData;
-
+        final Map<String, dynamic> consultaEgresoDataJson = json.decode(response.body);
+        _consultaEgresoData = ConsultaEgresoData.fromJson(consultaEgresoDataJson);
+        print('Consulta de egreso data loaded successfully.');
         notifyListeners();
       } else {
         throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
@@ -65,6 +65,32 @@ class PatientProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateConsultaEgresoData(String idPaciente, ConsultaEgresoData updatedData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://tu-servidor/actualizar_consultaegreso.php'), // ajusta la URL
+        body: {
+          'id_paciente': idPaciente,
+          'dxe': updatedData.dxe,
+          'fecha_egreso': updatedData.fechaEgreso,
+          'medico_egreso': updatedData.medicoEgreso,
+          'observaciones': updatedData.observaciones,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Consulta de egreso data updated successfully.');
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        throw Exception('Error al actualizar los datos de consultaegreso');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Error al actualizar los datos de consultaegreso');
+    }
+  }
+
+//TODO-------------------------------------------------------------------------
   Future<Map<String, dynamic>> updatePatientData(Patient updatedPatient) async {
     try {
       final response = await http.post(

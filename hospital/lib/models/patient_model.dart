@@ -43,7 +43,7 @@ class Patient {
 
 
   Patient({
-    this.idPaciente,
+     this.idPaciente,
      this.curp,
      this.nombre,
      this.apellidos,
