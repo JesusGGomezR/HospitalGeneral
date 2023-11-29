@@ -82,29 +82,50 @@ class _EditUserScreenState extends State<EditUserScreen> {
           fontSize: 14,
         ),
       ),
-      trailing: SizedBox(
-        width: 80,
-        child: ElevatedButton(
-          onPressed: () {
-            // Navegar a la pantalla de edición con el usuario seleccionado
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditUserDetailsScreen(user: user),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 80,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navegar a la pantalla de edición con el usuario seleccionado
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditUserDetailsScreen(user: user),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(
+                    255, 27, 89, 121), // Color de fondo del botón
               ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary:
-                Color.fromARGB(255, 27, 89, 121), // Color de fondo del botón
-          ),
-          child: Text(
-            'Editar',
-            style: TextStyle(
-              fontSize: 14,
+              child: Text(
+                'Editar',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
             ),
           ),
-        ),
+          SizedBox(width: 8), // Añadir un espacio entre los botones
+          SizedBox(
+            width: 84,
+            child: ElevatedButton(
+              onPressed: () async {},
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // Color de fondo del botón de eliminar
+              ),
+              child: const Text(
+                'Eliminar',
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
