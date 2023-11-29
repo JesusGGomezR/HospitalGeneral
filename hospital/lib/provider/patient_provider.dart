@@ -5,7 +5,6 @@ import 'package:hospital/models/patient_model.dart';
 import '../models/egreso_model.dart';
 import '../models/embarazada_model.dart';
 
-
 class PatientProvider extends ChangeNotifier {
   ConsultaEgresoData? _consultaEgresoData;
   ConsultaEgresoData? get consultaEgresoData => _consultaEgresoData;

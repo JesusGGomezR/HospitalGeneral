@@ -1,5 +1,5 @@
 name: hospital
-description: A new Flutter project.
+description: Esta es una aplicación para el registro y consulta de los datos de pacientes del Hospital Comunitario Tarimoro, desarrollada por estudiantes de Ing. Sistemas Computaciones 2019 del plantel institución ITESI ext. Tarimoro..
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -42,7 +42,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  msix: ^3.16.6
 
+flutter_icons:
+  image_path: "assets/images/icono-app.png"
+  android: true
+  ios: true
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

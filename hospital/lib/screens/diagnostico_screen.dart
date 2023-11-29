@@ -12,6 +12,7 @@ class DiagnosticoHistorialScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Historial de Diagnósticos'),
       ),
       body: FutureBuilder<List<DiagnosticoModel>>(
@@ -23,7 +24,6 @@ class DiagnosticoHistorialScreen extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             List<DiagnosticoModel> diagnosticos = snapshot.data ?? [];
-
             return ListView.builder(
               itemCount: diagnosticos.length,
               itemBuilder: (context, index) {

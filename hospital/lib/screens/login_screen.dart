@@ -141,6 +141,7 @@ class LoginScreen extends StatelessWidget {
 
                         TextFormField(
                           autocorrect: false,
+                          obscureText: true,
                           decoration: InputDecorations.inputDecoration(
                             hintext: '***********',
                             labeltext: 'Contraseña',
