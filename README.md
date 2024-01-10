@@ -1,4 +1,3 @@
-```markdown
 # Proyecto de Desarrollo: Sistema de Control de Pacientes y Historiales Clínicos
 
 Este proyecto tiene como objetivo abordar la problemática actual del Hospital Comunitario de Tarimoro, que enfrenta problemas significativos de inconsistencia e ineficiencia en el registro de pacientes y el manejo de historiales clínicos. La situación actual expone los datos de los pacientes a riesgos como duplicidad y modificaciones no autorizadas, lo que conlleva a inconsistencias en la información consultada y posibles robos de datos.
@@ -16,4 +15,4 @@ Este enfoque permitirá mejorar la consistencia y seguridad de la información, 
 ## Resumen
 
 En resumen, este proyecto tiene como meta no solo abordar la problemática actual del hospital, sino también ofrecer una solución integral que mejore la eficiencia y seguridad en el manejo de la información de los pacientes. La implementación de un sistema multiplataforma utilizando tecnologías ágiles demuestra un enfoque moderno y adaptativo para satisfacer las necesidades específicas del entorno hospitalario.
-```
+
